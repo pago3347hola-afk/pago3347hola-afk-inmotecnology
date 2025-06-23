@@ -72,7 +72,7 @@ export default function Home() {
             La Nueva Era de la Inversión Inmobiliaria
           </h1>
           <p className="mt-6 max-w-3xl mx-auto text-lg md:text-xl text-muted-foreground">
-            InmoTecnología Hub combina la última tecnología con oportunidades inmobiliarias exclusivas para ofrecerte una experiencia de inversión sin igual.
+            InmoTecnología combina la última tecnología con oportunidades de inversión exclusivas.
           </p>
           <div className="mt-8 flex justify-center">
             <Button asChild size="lg" className="font-bold">
