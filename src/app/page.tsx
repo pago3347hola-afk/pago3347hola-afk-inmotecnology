@@ -5,19 +5,19 @@ import { ArrowRight, Home as HomeIcon, BatteryCharging, LifeBuoy } from "lucide-
 
 const services = [
   {
-    icon: <HomeIcon className="w-8 h-8 text-secondary" />,
+    icon: <HomeIcon className="w-8 h-8 text-primary-foreground" />,
     title: "Empieza a Invertir",
     description: "Invierte en nuestras propiedades exclusivas con retornos seguros",
     link: "/properties",
   },
   {
-    icon: <BatteryCharging className="w-8 h-8 text-secondary" />,
+    icon: <BatteryCharging className="w-8 h-8 text-primary-foreground" />,
     title: "Gestionar Cuenta",
     description: "Recarga tu saldo y gestiona tus finanzas de forma segura.",
     link: "/account",
   },
   {
-    icon: <LifeBuoy className="w-8 h-8 text-secondary" />,
+    icon: <LifeBuoy className="w-8 h-8 text-primary-foreground" />,
     title: "Soporte Dedicado",
     description: "Nuestro equipo está aquí para ayudarte en cada paso.",
     link: "/support",
@@ -47,7 +47,7 @@ export default function HomePage() {
         <div className="container mx-auto px-4 md:px-6">
            <div className="text-center">
             <h2 className="font-headline text-3xl md:text-4xl font-bold">Servicios a tu Medida</h2>
-            <p className="mt-4 text-lg text-muted-foreground">Todo lo que necesitas para una gestión inmobiliaria exitosa.</p>
+            <p className="mt-4 text-lg text-muted-foreground">Todo lo que necesitas para una inversión inmobiliaria exitosa.</p>
           </div>
           <div className="mt-12 grid gap-8 md:grid-cols-3">
             {services.map((service) => (
