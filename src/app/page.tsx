@@ -7,7 +7,7 @@ const services = [
   {
     icon: <HomeIcon className="w-8 h-8 text-secondary" />,
     title: "empieza a invertir",
-    description: "Busca en nuestro extenso catálogo de propiedades de lujo.",
+    description: "Invierte en nuestras propiedades exclusivas con retornos seguros",
     link: "/properties",
   },
   {
