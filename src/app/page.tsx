@@ -63,7 +63,7 @@ const services = [
   },
 ];
 
-export default function Home() {
+export default function HomePage() {
   return (
     <div className="flex flex-col">
       <section className="relative w-full py-24 md:py-32 lg:py-40 bg-secondary/20">
@@ -76,7 +76,7 @@ export default function Home() {
           </p>
           <div className="mt-8 flex justify-center">
             <Button asChild size="lg" className="font-bold">
-              <Link href="/properties">Explorar Propiedades <ArrowRight className="ml-2 h-5 w-5" /></Link>
+              <Link href="/properties">empieza a invertir <ArrowRight className="ml-2 h-5 w-5" /></Link>
             </Button>
           </div>
         </div>
