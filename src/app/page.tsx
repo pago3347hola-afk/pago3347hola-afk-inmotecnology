@@ -6,7 +6,7 @@ import { ArrowRight, Home as HomeIcon, BatteryCharging, LifeBuoy } from "lucide-
 const services = [
   {
     icon: <HomeIcon className="w-8 h-8 text-secondary" />,
-    title: "Explorar Propiedades",
+    title: "empieza a invertir",
     description: "Busca en nuestro extenso catálogo de propiedades de lujo.",
     link: "/properties",
   },
@@ -33,7 +33,7 @@ export default function HomePage() {
             La Nueva Era de la Inversión Inmobiliaria
           </h1>
           <p className="mt-6 max-w-3xl mx-auto text-lg md:text-xl text-muted-foreground">
-            InmoTecnología combina la última tecnología con oportunidades de inversión exclusivas.
+            En InmoTecnología, integramos herramientas digitales de vanguardia para que tu inversión inmobiliaria sea más inteligente, segura y rentable.
           </p>
           <div className="mt-8 flex justify-center">
             <Button asChild size="lg" className="font-bold">
