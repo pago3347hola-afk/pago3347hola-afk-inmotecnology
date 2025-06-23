@@ -29,7 +29,7 @@ export default function HomePage() {
     <div className="flex flex-col">
       <section className="relative w-full py-24 md:py-32 lg:py-40 bg-secondary/20">
         <div className="container mx-auto px-4 md:px-6 text-center">
-          <h1 className="font-headline text-4xl md:text-6xl lg:text-7xl font-bold tracking-tighter text-secondary-foreground">
+          <h1 className="font-headline text-4xl md:text-6xl lg:text-7xl font-bold tracking-tighter text-heading">
             La Nueva Era de la Inversión Inmobiliaria
           </h1>
           <p className="mt-6 max-w-3xl mx-auto text-lg md:text-xl text-muted-foreground">
@@ -37,7 +37,7 @@ export default function HomePage() {
           </p>
           <div className="mt-8 flex justify-center">
             <Button asChild size="lg" className="font-bold">
-              <Link href="/properties">empieza a invertir <ArrowRight className="ml-2 h-5 w-5" /></Link>
+              <Link href="/properties">EMPIEZA A INVERTIR <ArrowRight className="ml-2 h-5 w-5" /></Link>
             </Button>
           </div>
         </div>
