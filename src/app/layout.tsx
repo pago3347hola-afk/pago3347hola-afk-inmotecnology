@@ -5,7 +5,7 @@ import { Footer } from '@/components/layout/footer';
 import './globals.css';
 
 export const metadata: Metadata = {
-  title: 'InmoTecnología Hub',
+  title: 'InmoTecnología',
   description: 'Your hub for modern real estate solutions.',
 };
 

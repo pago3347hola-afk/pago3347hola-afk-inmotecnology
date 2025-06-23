@@ -19,7 +19,7 @@ export default function WithdrawPage() {
           <Card>
             <CardHeader>
               <CardTitle className="font-headline text-3xl">Retirar Fondos</CardTitle>
-              <CardDescription>Transfiere fondos de tu cuenta de InmoTecnología Hub a tu banco.</CardDescription>
+              <CardDescription>Transfiere fondos de tu cuenta de InmoTecnología a tu banco.</CardDescription>
             </CardHeader>
             <CardContent className="space-y-6">
               <Alert>

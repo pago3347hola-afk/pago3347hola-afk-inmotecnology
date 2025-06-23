@@ -5,7 +5,7 @@ export function Logo() {
     <div className="flex items-center gap-2">
       <Building2 className="h-7 w-7 text-primary" />
       <span className="font-headline text-xl font-bold text-foreground">
-        InmoTecnología Hub
+        InmoTecnología
       </span>
     </div>
   );

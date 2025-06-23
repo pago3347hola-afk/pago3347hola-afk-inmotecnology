@@ -38,7 +38,7 @@ export function Footer() {
           </div>
         </div>
         <div className="mt-8 border-t pt-6 text-center text-sm text-muted-foreground">
-          <p>&copy; {new Date().getFullYear()} InmoTecnología Hub. Todos los derechos reservados.</p>
+          <p>&copy; {new Date().getFullYear()} InmoTecnología. Todos los derechos reservados.</p>
         </div>
       </div>
     </footer>

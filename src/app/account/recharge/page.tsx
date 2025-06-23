@@ -19,7 +19,7 @@ export default function RechargePage() {
           <Card>
             <CardHeader>
               <CardTitle className="font-headline text-3xl">Recargar Saldo</CardTitle>
-              <CardDescription>Añade fondos a tu cuenta de InmoTecnología Hub.</CardDescription>
+              <CardDescription>Añade fondos a tu cuenta de InmoTecnología.</CardDescription>
             </CardHeader>
             <CardContent className="space-y-6">
               <div className="space-y-2">
