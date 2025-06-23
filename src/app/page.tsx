@@ -6,7 +6,7 @@ import { ArrowRight, Home as HomeIcon, BatteryCharging, LifeBuoy } from "lucide-
 const services = [
   {
     icon: <HomeIcon className="w-8 h-8 text-secondary" />,
-    title: "empieza a invertir",
+    title: "Empieza a Invertir",
     description: "Invierte en nuestras propiedades exclusivas con retornos seguros",
     link: "/properties",
   },
@@ -60,7 +60,7 @@ export default function HomePage() {
                 <h3 className="font-headline text-xl font-bold">{service.title}</h3>
                 <p className="text-muted-foreground mt-2">{service.description}</p>
                  <Button asChild variant="link" className="mt-4 text-primary">
-                  <Link href={service.link}>Saber más <ArrowRight className="ml-2 h-4 w-4" /></Link>
+                  <Link href={service.link}>Haz click aquí <ArrowRight className="ml-2 h-4 w-4" /></Link>
                 </Button>
               </Card>
             ))}
