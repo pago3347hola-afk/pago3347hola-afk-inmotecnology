@@ -60,7 +60,10 @@ export default function HomePage() {
                 <h3 className="font-headline text-xl font-bold">{service.title}</h3>
                 <p className="text-muted-foreground mt-2">{service.description}</p>
                  <Button asChild variant="link" className="mt-4 text-primary">
-                  <Link href={service.link}>Haz click aquí <ArrowRight className="ml-2 h-4 w-4" /></Link>
+                  <Link href={service.link}>
+                    {service.title === 'Gestionar Cuenta' ? 'demo' : 'Haz click aquí'}
+                    <ArrowRight className="ml-2 h-4 w-4" />
+                  </Link>
                 </Button>
               </Card>
             ))}
