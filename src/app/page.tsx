@@ -5,19 +5,19 @@ import { ArrowRight, Home as HomeIcon, BatteryCharging, LifeBuoy } from "lucide-
 
 const services = [
   {
-    icon: <HomeIcon className="w-8 h-8 text-primary-foreground" />,
+    icon: <HomeIcon className="w-8 h-8 text-primary" />,
     title: "Empieza a Invertir",
     description: "Invierte en nuestras propiedades exclusivas con retornos seguros",
     link: "/properties",
   },
   {
-    icon: <BatteryCharging className="w-8 h-8 text-primary-foreground" />,
+    icon: <BatteryCharging className="w-8 h-8 text-primary" />,
     title: "Gestionar Cuenta",
     description: "Recarga tu saldo y gestiona tus finanzas de forma segura.",
     link: "/account",
   },
   {
-    icon: <LifeBuoy className="w-8 h-8 text-primary-foreground" />,
+    icon: <LifeBuoy className="w-8 h-8 text-primary" />,
     title: "Soporte Dedicado",
     description: "Nuestro equipo está aquí para ayudarte en cada paso.",
     link: "/support",
@@ -53,7 +53,7 @@ export default function HomePage() {
             {services.map((service) => (
               <Card key={service.title} className="text-center p-6 hover:shadow-lg transition-shadow">
                 <div className="flex justify-center mb-4">
-                  <div className="bg-primary p-4 rounded-full">
+                  <div className="bg-primary/10 p-4 rounded-full">
                     {service.icon}
                   </div>
                 </div>
