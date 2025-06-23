@@ -1,46 +1,7 @@
-import Image from "next/image";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Badge } from "@/components/ui/badge";
-import { ArrowRight, BedDouble, Bath, Square, Home as HomeIcon, BatteryCharging, Banknote, LifeBuoy } from "lucide-react";
-
-const featuredProperties = [
-  {
-    id: 1,
-    title: "Villa de Lujo con Vistas al Mar",
-    location: "Marbella, Málaga",
-    price: "2,500,000",
-    beds: 5,
-    baths: 6,
-    sqft: 750,
-    image: "https://placehold.co/600x400.png",
-    aiHint: "luxury villa"
-  },
-  {
-    id: 2,
-    title: "Ático Moderno en el Centro",
-    location: "Madrid, Madrid",
-    price: "1,200,000",
-    beds: 3,
-    baths: 3,
-    sqft: 220,
-    image: "https://placehold.co/600x400.png",
-    aiHint: "modern apartment"
-  },
-  {
-    id: 3,
-    title: "Finca Rústica con Piscina",
-    location: "Ibiza, Baleares",
-    price: "3,100,000",
-    beds: 6,
-    baths: 5,
-    sqft: 1200,
-    image: "https://placehold.co/600x400.png",
-    aiHint: "rustic farmhouse"
-  },
-];
+import { Card } from "@/components/ui/card";
+import { ArrowRight, Home as HomeIcon, BatteryCharging, LifeBuoy } from "lucide-react";
 
 const services = [
   {
@@ -81,34 +42,6 @@ export default function HomePage() {
           </div>
         </div>
       </section>
-
-      <section className="py-16 md:py-24 bg-background">
-        <div className="container mx-auto px-4 md:px-6">
-          <div className="text-center">
-            <h2 className="font-headline text-3xl md:text-4xl font-bold">Propiedades Destacadas</h2>
-            <p className="mt-4 text-lg text-muted-foreground">Una selección curada de nuestras mejores propiedades.</p>
-          </div>
-          <div className="mt-12 grid gap-8 md:grid-cols-2 lg:grid-cols-3">
-            {featuredProperties.map((prop) => (
-              <Card key={prop.id} className="overflow-hidden group hover:shadow-xl transition-shadow duration-300">
-                <CardHeader className="p-0">
-                  <Image src={prop.image} alt={prop.title} width={600} height={400} className="w-full h-56 object-cover group-hover:scale-105 transition-transform duration-300" data-ai-hint={prop.aiHint} />
-                </CardHeader>
-                <CardContent className="p-6">
-                  <Badge variant="secondary" className="mb-2">{prop.location}</Badge>
-                  <h3 className="font-headline text-2xl font-bold text-gray-800">{prop.title}</h3>
-                  <p className="text-2xl font-bold text-primary mt-2">{prop.price} €</p>
-                  <div className="flex justify-between text-muted-foreground mt-4 border-t pt-4">
-                    <div className="flex items-center gap-2"><BedDouble className="w-5 h-5" /> {prop.beds}</div>
-                    <div className="flex items-center gap-2"><Bath className="w-5 h-5" /> {prop.baths}</div>
-                    <div className="flex items-center gap-2"><Square className="w-5 h-5" /> {prop.sqft} m²</div>
-                  </div>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
-        </div>
-      </section>
       
       <section className="py-16 md:py-24 bg-secondary/20">
         <div className="container mx-auto px-4 md:px-6">
@@ -131,62 +64,6 @@ export default function HomePage() {
                 </Button>
               </Card>
             ))}
-          </div>
-        </div>
-      </section>
-
-      <section className="py-16 md:py-24 bg-background">
-        <div className="container mx-auto px-4 md:px-6">
-          <div className="text-center">
-            <h2 className="font-headline text-3xl md:text-4xl font-bold">Lo que Dicen Nuestros Clientes</h2>
-            <p className="mt-4 text-lg text-muted-foreground">La confianza es nuestro mayor activo.</p>
-          </div>
-          <div className="mt-12 grid gap-8 md:grid-cols-2 lg:grid-cols-3">
-            <Card>
-              <CardContent className="p-6">
-                <div className="flex items-center gap-4 mb-4">
-                  <Avatar>
-                    <AvatarImage src="https://placehold.co/40x40.png" />
-                    <AvatarFallback>JC</AvatarFallback>
-                  </Avatar>
-                  <div>
-                    <p className="font-bold">Juan Carlos</p>
-                    <p className="text-sm text-muted-foreground">Inversor</p>
-                  </div>
-                </div>
-                <p className="text-muted-foreground italic">"La plataforma es increíblemente intuitiva y el equipo de soporte es de primera. ¡Totalmente recomendado!"</p>
-              </CardContent>
-            </Card>
-             <Card>
-              <CardContent className="p-6">
-                <div className="flex items-center gap-4 mb-4">
-                  <Avatar>
-                    <AvatarImage src="https://placehold.co/40x40.png" />
-                    <AvatarFallback>MR</AvatarFallback>
-                  </Avatar>
-                  <div>
-                    <p className="font-bold">Maria Rodriguez</p>
-                    <p className="text-sm text-muted-foreground">Agente Inmobiliario</p>
-                  </div>
-                </div>
-                <p className="text-muted-foreground italic">"Facilita enormemente la gestión de propiedades y clientes. Un antes y un después en mi carrera."</p>
-              </CardContent>
-            </Card>
-            <Card>
-              <CardContent className="p-6">
-                <div className="flex items-center gap-4 mb-4">
-                  <Avatar>
-                    <AvatarImage src="https://placehold.co/40x40.png" />
-                    <AvatarFallback>LP</AvatarFallback>
-                  </Avatar>
-                  <div>
-                    <p className="font-bold">Laura Pérez</p>
-                    <p className="text-sm text-muted-foreground">Compradora de vivienda</p>
-                  </div>
-                </div>
-                <p className="text-muted-foreground italic">"Encontré la casa de mis sueños en una semana. El proceso fue transparente y muy sencillo."</p>
-              </CardContent>
-            </Card>
           </div>
         </div>
       </section>

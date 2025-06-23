@@ -8,7 +8,7 @@ import { Menu, Home, BatteryCharging, Banknote, LifeBuoy, LogIn, UserPlus } from
 import { Logo } from "@/components/logo";
 
 const navLinks = [
-  { href: "/", label: "Stephen", icon: <Home className="w-4 h-4" /> },
+  { href: "/", label: "Inicio", icon: <Home className="w-4 h-4" /> },
   { href: "/properties", label: "Propiedades", icon: <Home className="w-4 h-4" /> },
   { href: "/account", label: "Recargar", icon: <BatteryCharging className="w-4 h-4" /> },
   { href: "/account/withdraw", label: "Retiro", icon: <Banknote className="w-4 h-4" /> },
