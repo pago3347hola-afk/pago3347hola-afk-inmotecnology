@@ -24,7 +24,7 @@ export async function signInWithGoogle() {
 
 LISTA DE VERIFICACIÓN:
 ---------------------------------
-1.  **URL a autorizar:**
+1.  **URL a autorizar (Cópiala):**
     ${window.location.origin}
 
 2.  **Ve a Google Cloud -> Credenciales.**
@@ -35,8 +35,7 @@ LISTA DE VERIFICACIÓN:
     - Haz clic en su nombre para editar.
 
 4.  **Añade la URL:**
-    - En "Restricciones de aplicaciones", asegúrate que "Sitios web" esté seleccionado.
-    - Haz clic en "AÑADIR".
+    - En "Restricciones de sitios web", haz clic en "AÑADIR".
     - Pega la URL del paso 1.
 
 5.  **Guarda y espera 1 minuto antes de reintentar.**
