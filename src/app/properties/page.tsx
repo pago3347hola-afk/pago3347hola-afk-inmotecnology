@@ -156,8 +156,8 @@ export default function PropertiesPage() {
         <Card className="overflow-hidden rounded-xl border-0 shadow-none">
           <CardHeader className="p-0">
              <Image
-              src="https://http2.mlstatic.com/D_NQ_NP_2X_815107-MLM81432530034_122024-F-residencia-en-venta-en-lomas-de-juriquilla-diseno-de-autor-materiales-premium.webp"
-              data-ai-hint="luxury residence modern"
+              src="https://i0.wp.com/epmqro.com/wp-content/uploads/2020/08/2.1.jpeg?fit=800%2C600&ssl=1"
+              data-ai-hint="modern house exterior"
               alt="casa executive"
               width={800}
               height={500}
