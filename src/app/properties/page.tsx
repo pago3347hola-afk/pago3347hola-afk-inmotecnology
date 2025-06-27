@@ -173,7 +173,7 @@ export default function PropertiesPage() {
                     <Landmark className="w-5 h-5 text-primary" />
                     <div>
                         <p className="text-muted-foreground">Costo de Inversión</p>
-                        <p className="font-bold text-lg">$500.00 MXN</p>
+                        <p className="font-bold text-lg">$700.00 MXN</p>
                     </div>
                 </div>
                 <div className="flex items-center gap-2">
@@ -199,15 +199,15 @@ export default function PropertiesPage() {
                   <div className="grid grid-cols-3 gap-4 pt-2">
                     <div className="bg-muted/30 p-3 rounded-lg text-center">
                         <p className="text-xs text-muted-foreground">Ingresos Diarios</p>
-                        <p className="font-bold text-base text-foreground">$50 MXN</p>
+                        <p className="font-bold text-base text-foreground">$70 MXN</p>
                     </div>
                      <div className="bg-muted/30 p-3 rounded-lg text-center">
                         <p className="text-xs text-muted-foreground">Ingresos Semanales</p>
-                        <p className="font-bold text-base text-foreground">$350 MXN</p>
+                        <p className="font-bold text-base text-foreground">$490 MXN</p>
                     </div>
                      <div className="bg-muted/30 p-3 rounded-lg text-center">
                         <p className="text-xs text-muted-foreground">Ingresos Mensuales</p>
-                        <p className="font-bold text-base text-foreground">$1500 MXN</p>
+                        <p className="font-bold text-base text-foreground">$2100 MXN</p>
                     </div>
                   </div>
                 </AccordionContent>
