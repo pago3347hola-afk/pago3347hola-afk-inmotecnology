@@ -14,7 +14,7 @@ export default function PropertiesPage() {
         <Card className="overflow-hidden shadow-lg rounded-xl">
           <CardHeader className="p-0">
              <Image
-              src="https://placehold.co/800x500.png"
+              src="__GCP_BUCKET_URL__/casa.png"
               data-ai-hint="house pool"
               alt="Casa Bosquesinos"
               width={800}
