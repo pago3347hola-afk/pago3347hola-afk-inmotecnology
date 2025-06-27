@@ -11,26 +11,17 @@ export async function signInWithGoogle() {
     await signInWithPopup(auth, provider);
     window.location.href = '/account';
   } catch (error: any) {
+    // Si el usuario cierra la ventana emergente, no mostramos un error.
     if (error.code === 'auth/popup-closed-by-user' || error.code === 'auth/cancelled-popup-request') {
       console.log("Inicio de sesión cancelado por el usuario.");
       return;
     }
     
-    let title = "Error de inicio de sesión";
-    let description = `Ocurrió un error inesperado. Por favor, inténtalo de nuevo. Código: ${error.code}`;
-
-    if (error.code === 'auth/unauthorized-domain') {
-      title = "Dominio no autorizado";
-      description = "Este dominio no está autorizado. Asegúrate de que 'localhost' esté en los 'Dominios autorizados' de Firebase y que 'http://localhost:9002' esté en los 'Orígenes de JavaScript autorizados' en Google Cloud.";
-    } else if (error.code === 'auth/internal-error') {
-       title = "Error de Configuración";
-       description = "Hay un error de configuración. Verifica en la Consola de Google Cloud que en 'Orígenes de JavaScript autorizados' esté 'http://localhost:9002' y que en 'URI de redireccionamiento autorizados' esté el handler de Firebase.";
-    }
-
+    // Para todos los demás errores, mostramos una notificación genérica.
     toast({
       variant: "destructive",
-      title: title,
-      description: description,
+      title: "Error de inicio de sesión",
+      description: `Ocurrió un error. Por favor, inténtalo de nuevo. (${error.code})`,
     });
     
     console.error("Error de Autenticación de Firebase:", error);
