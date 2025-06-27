@@ -4,7 +4,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
-import { MessageSquare, Send } from "lucide-react";
+import { Send } from "lucide-react";
 
 const faqs = [
   {
@@ -109,16 +109,6 @@ export default function SupportPage() {
                 <Send className="mr-2 h-4 w-4" /> Enviar Mensaje
               </Button>
             </CardContent>
-          </Card>
-
-          <Card className="flex flex-col md:flex-row items-center justify-between p-6 bg-secondary/50">
-            <div>
-              <h3 className="font-headline text-xl font-bold">¿Prefieres hablar en tiempo real?</h3>
-              <p className="text-muted-foreground">Inicia un chat con uno de nuestros especialistas.</p>
-            </div>
-            <Button className="mt-4 md:mt-0 font-bold">
-              <MessageSquare className="mr-2 h-4 w-4" /> Iniciar Chat en Vivo
-            </Button>
           </Card>
         </div>
       </div>
