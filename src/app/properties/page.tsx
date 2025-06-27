@@ -86,13 +86,13 @@ export default function PropertiesPage() {
              <Image
               src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSu1o0NyUqFdZF6kxB1JvRge3lrCkSlHlRwMvAGPQeZ5WLiCKazKrGJiKAF&s=10"
               data-ai-hint="modern house pool"
-              alt="casa esmeralda"
+              alt="casa zafiro ejecutiva"
               width={800}
               height={500}
               className="w-full h-auto object-cover"
             />
             <div className="p-6">
-                <CardTitle className="font-headline text-3xl">casa esmeralda</CardTitle>
+                <CardTitle className="font-headline text-3xl">casa zafiro ejecutiva</CardTitle>
             </div>
           </CardHeader>
           <CardContent className="p-6 space-y-6">
