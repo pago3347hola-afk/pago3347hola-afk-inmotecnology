@@ -14,12 +14,11 @@ export default function PropertiesPage() {
         <Card className="overflow-hidden shadow-lg rounded-xl">
           <CardHeader className="p-0">
              <Image
-              src="https://placehold.co/800x500.png"
+              src="__GCP_BUCKET_URL__/23f1e912-78d1-419b-ab29-f12a2e46f698.png"
               alt="Casa Bosquesinos"
               width={800}
               height={500}
               className="w-full h-auto object-cover"
-              data-ai-hint="forest house"
             />
             <div className="p-6">
                 <CardTitle className="font-headline text-3xl">Casa Bosquesinos</CardTitle>
