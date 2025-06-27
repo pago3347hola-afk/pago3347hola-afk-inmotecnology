@@ -14,9 +14,9 @@ export default function PropertiesPage() {
         <Card className="overflow-hidden shadow-lg rounded-xl">
           <CardHeader className="p-0">
              <Image
-              src="https://images.unsplash.com/photo-1580587771525-78b9dba3b914"
-              data-ai-hint="modern house pool"
-              alt="Casa de campo con alberca y vista a las montañas"
+              src="https://images.unsplash.com/photo-1564013799919-ab600027ffc6"
+              data-ai-hint="country house pool"
+              alt="Casa de campo humilde con alberca"
               width={800}
               height={500}
               className="w-full h-auto object-cover"
