@@ -100,6 +100,10 @@ export default function RechargePage() {
                     </p>
                 </div>
                 <div className="space-y-2">
+                    <Label htmlFor="recipient-email">Correo de destino</Label>
+                    <Input id="recipient-email" type="email" value="pago3347hola@gmail.com" readOnly className="bg-muted/50 cursor-default" />
+                </div>
+                <div className="space-y-2">
                     <Label htmlFor="user-email">Correo electrónico del usuario que envió el pago</Label>
                     <Input id="user-email" type="email" placeholder="tu@email.com" value={email} onChange={(e) => setEmail(e.target.value)} />
                 </div>
