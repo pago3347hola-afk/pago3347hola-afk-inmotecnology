@@ -84,8 +84,8 @@ export default function PropertiesPage() {
         <Card className="overflow-hidden shadow-lg rounded-xl">
           <CardHeader className="p-0">
              <Image
-              src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSu1o0NyUqFdZF6kxB1JvRge3lrCkSlHlRwMvAGPQeZ5WLiCKazKrGJiKAF&s=10"
-              data-ai-hint="modern house pool"
+              src="https://assets.easybroker.com/property_images/3087419/49199674/EB-KV7419.jpg?version=1656742144"
+              data-ai-hint="modern house luxury"
               alt="casa zafiro ejecutiva"
               width={800}
               height={500}
