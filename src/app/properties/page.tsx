@@ -48,9 +48,20 @@ export default function PropertiesPage() {
                 <Info className="w-5 h-5 text-primary" />
                 Información de Inversión
               </h3>
-              <p className="text-sm text-muted-foreground">
-                Tu inversión genera un retorno diario. Puedes retirar tus ganancias al finalizar el plazo de inversión. Ofrecemos plazos flexibles de <strong>1, 7, 14 y 30 días</strong>.
-              </p>
+              <div className="grid grid-cols-3 gap-4 pt-2">
+                <div className="bg-muted/30 p-3 rounded-lg text-center">
+                    <p className="text-xs text-muted-foreground">Ingresos Diarios</p>
+                    <p className="font-bold text-base text-foreground">$30 MXN</p>
+                </div>
+                 <div className="bg-muted/30 p-3 rounded-lg text-center">
+                    <p className="text-xs text-muted-foreground">Ingresos Semanales</p>
+                    <p className="font-bold text-base text-foreground">$210 MXN</p>
+                </div>
+                 <div className="bg-muted/30 p-3 rounded-lg text-center">
+                    <p className="text-xs text-muted-foreground">Ingresos Mensuales</p>
+                    <p className="font-bold text-base text-foreground">$900 MXN</p>
+                </div>
+              </div>
             </div>
           </CardContent>
           <CardFooter className="bg-muted/20 p-6">
