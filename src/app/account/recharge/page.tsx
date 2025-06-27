@@ -8,12 +8,14 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
-import { ArrowLeft, Banknote, Mail } from "lucide-react";
+import { ArrowLeft, Banknote, Mail, Loader2 } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
+import { sendPaymentProof } from "@/ai/flows/send-payment-proof-flow";
 
 export default function RechargePage() {
   const [file, setFile] = useState<File | null>(null);
   const [email, setEmail] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
   const { toast } = useToast();
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -22,7 +24,18 @@ export default function RechargePage() {
     }
   };
 
-  const handleSubmitProof = () => {
+  const fileToDataUri = (file: File): Promise<string> => {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onload = () => {
+        resolve(reader.result as string);
+      };
+      reader.onerror = reject;
+      reader.readAsDataURL(file);
+    });
+  }
+
+  const handleSubmitProof = async () => {
     if (!email || !file) {
       toast({
         variant: "destructive",
@@ -32,16 +45,45 @@ export default function RechargePage() {
       return;
     }
 
-    toast({
-      title: "Comprobante Enviado",
-      description: "Hemos recibido tu comprobante. Lo verificaremos a la brevedad.",
-    });
+    setIsLoading(true);
 
-    setEmail('');
-    setFile(null);
-    const fileInput = document.getElementById('payment-proof') as HTMLInputElement;
-    if (fileInput) {
-      fileInput.value = '';
+    try {
+      const photoDataUri = await fileToDataUri(file);
+      
+      const result = await sendPaymentProof({
+        userEmail: email,
+        photoDataUri: photoDataUri,
+      });
+
+      if (result.success) {
+        toast({
+          title: "Comprobante Enviado",
+          description: "Hemos recibido tu comprobante. Lo verificaremos a la brevedad.",
+        });
+
+        setEmail('');
+        setFile(null);
+        const fileInput = document.getElementById('payment-proof') as HTMLInputElement;
+        if (fileInput) {
+          fileInput.value = '';
+        }
+      } else {
+         toast({
+          variant: "destructive",
+          title: "Error al Enviar",
+          description: result.message,
+        });
+      }
+
+    } catch (error) {
+       toast({
+        variant: "destructive",
+        title: "Error Inesperado",
+        description: "Ocurrió un error al enviar tu comprobante. Inténtalo de nuevo.",
+      });
+      console.error(error);
+    } finally {
+        setIsLoading(false);
     }
   };
 
@@ -115,9 +157,18 @@ export default function RechargePage() {
                     <Label htmlFor="payment-proof">Subir imagen del pago</Label>
                     <Input id="payment-proof" type="file" accept="image/*" onChange={handleFileChange} className="file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-primary/10 file:text-primary hover:file:bg-primary/20" />
                 </div>
-                <Button className="w-full" onClick={handleSubmitProof}>
-                    <Mail className="mr-2 h-4 w-4" />
-                    Enviar Comprobante
+                <Button className="w-full" onClick={handleSubmitProof} disabled={isLoading}>
+                  {isLoading ? (
+                    <>
+                      <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                      Enviando...
+                    </>
+                  ) : (
+                    <>
+                      <Mail className="mr-2 h-4 w-4" />
+                      Enviar Comprobante
+                    </>
+                  )}
                 </Button>
               </div>
 
