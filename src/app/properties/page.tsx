@@ -14,9 +14,9 @@ export default function PropertiesPage() {
         <Card className="overflow-hidden shadow-lg rounded-xl">
           <CardHeader className="p-0">
              <Image
-              src="https://placehold.co/800x500.png"
+              src="https://images.unsplash.com/photo-1580587771525-78b9dba3b914"
               data-ai-hint="house pool"
-              alt="Casa Bosquesinos"
+              alt="Casa moderna con alberca"
               width={800}
               height={500}
               className="w-full h-auto object-cover"
