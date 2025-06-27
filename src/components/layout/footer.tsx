@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { Logo } from "@/components/logo";
-import { Twitter, Facebook, Instagram } from "lucide-react";
+import { Facebook, Instagram, Send } from "lucide-react";
 
 export function Footer() {
   return (
@@ -25,8 +25,8 @@ export function Footer() {
           <div>
             <h3 className="font-headline font-semibold">Síguenos</h3>
             <div className="flex items-center gap-4 mt-4">
-              <Link href="#" aria-label="Twitter">
-                <Twitter className="h-6 w-6 text-muted-foreground hover:text-primary" />
+              <Link href="#" aria-label="Telegram">
+                <Send className="h-6 w-6 text-muted-foreground hover:text-primary" />
               </Link>
               <Link href="#" aria-label="Facebook">
                 <Facebook className="h-6 w-6 text-muted-foreground hover:text-primary" />
