@@ -13,7 +13,7 @@ export async function signInWithGoogle() {
     console.log("Signed in user:", user);
     // Here you can handle the user session, e.g., by redirecting them
     // to their account page or storing user info in your app's state.
-    // Example: window.location.href = '/account';
+    window.location.href = '/account';
   } catch (error: any) {
     // Handle Errors here.
     console.error("Authentication Error:", error.message);
