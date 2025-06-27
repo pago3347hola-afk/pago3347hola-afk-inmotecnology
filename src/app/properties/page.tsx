@@ -3,6 +3,7 @@ import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { ArrowRight, Info, Landmark, TrendingUp } from "lucide-react";
 
 export default function PropertiesPage() {
@@ -43,26 +44,32 @@ export default function PropertiesPage() {
 
             <Separator />
 
-            <div className="space-y-3">
-              <h3 className="font-semibold text-base flex items-center gap-2">
-                <Info className="w-5 h-5 text-primary" />
-                Información de Inversión
-              </h3>
-              <div className="grid grid-cols-3 gap-4 pt-2">
-                <div className="bg-muted/30 p-3 rounded-lg text-center">
-                    <p className="text-xs text-muted-foreground">Ingresos Diarios</p>
-                    <p className="font-bold text-base text-foreground">$30 MXN</p>
-                </div>
-                 <div className="bg-muted/30 p-3 rounded-lg text-center">
-                    <p className="text-xs text-muted-foreground">Ingresos Semanales</p>
-                    <p className="font-bold text-base text-foreground">$210 MXN</p>
-                </div>
-                 <div className="bg-muted/30 p-3 rounded-lg text-center">
-                    <p className="text-xs text-muted-foreground">Ingresos Mensuales</p>
-                    <p className="font-bold text-base text-foreground">$900 MXN</p>
-                </div>
-              </div>
-            </div>
+            <Accordion type="single" collapsible className="w-full">
+              <AccordionItem value="investment-info" className="border-b-0">
+                <AccordionTrigger className="py-3 hover:no-underline">
+                  <span className="font-semibold text-base flex items-center gap-2">
+                    <Info className="w-5 h-5 text-primary" />
+                    Información de Inversión
+                  </span>
+                </AccordionTrigger>
+                <AccordionContent>
+                  <div className="grid grid-cols-3 gap-4 pt-2">
+                    <div className="bg-muted/30 p-3 rounded-lg text-center">
+                        <p className="text-xs text-muted-foreground">Ingresos Diarios</p>
+                        <p className="font-bold text-base text-foreground">$30 MXN</p>
+                    </div>
+                     <div className="bg-muted/30 p-3 rounded-lg text-center">
+                        <p className="text-xs text-muted-foreground">Ingresos Semanales</p>
+                        <p className="font-bold text-base text-foreground">$210 MXN</p>
+                    </div>
+                     <div className="bg-muted/30 p-3 rounded-lg text-center">
+                        <p className="text-xs text-muted-foreground">Ingresos Mensuales</p>
+                        <p className="font-bold text-base text-foreground">$900 MXN</p>
+                    </div>
+                  </div>
+                </AccordionContent>
+              </AccordionItem>
+            </Accordion>
           </CardContent>
           <CardFooter className="bg-muted/20 p-6">
             <Button asChild className="w-full font-bold" size="lg">
