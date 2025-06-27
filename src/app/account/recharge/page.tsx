@@ -4,7 +4,8 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { ArrowLeft, CreditCard } from "lucide-react";
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
+import { ArrowLeft, Banknote } from "lucide-react";
 
 export default function RechargePage() {
   return (
@@ -23,42 +24,38 @@ export default function RechargePage() {
             </CardHeader>
             <CardContent className="space-y-6">
               <div className="space-y-2">
-                <Label htmlFor="amount">Cantidad (€)</Label>
+                <Label htmlFor="amount">Cantidad (MXN)</Label>
                 <Input id="amount" type="number" placeholder="Ej: 500" />
               </div>
               <div className="space-y-2">
                 <Label htmlFor="payment-method">Método de Pago</Label>
-                 <Select>
+                 <Select defaultValue="transfer">
                     <SelectTrigger id="payment-method">
                         <SelectValue placeholder="Selecciona un método de pago" />
                     </SelectTrigger>
                     <SelectContent>
-                        <SelectItem value="credit-card">Tarjeta de Crédito / Débito</SelectItem>
-                        <SelectItem value="paypal">PayPal</SelectItem>
                         <SelectItem value="transfer">Transferencia Bancaria</SelectItem>
                     </SelectContent>
                 </Select>
               </div>
-              <div className="space-y-4 border p-4 rounded-md">
-                 <h4 className="font-semibold flex items-center"><CreditCard className="mr-2 h-5 w-5 text-muted-foreground"/> Detalles de la Tarjeta</h4>
-                 <div className="space-y-2">
-                    <Label htmlFor="card-number">Número de Tarjeta</Label>
-                    <Input id="card-number" placeholder="0000 0000 0000 0000" />
-                 </div>
-                 <div className="grid grid-cols-2 gap-4">
-                    <div className="space-y-2">
-                        <Label htmlFor="expiry-date">Fecha de Caducidad</Label>
-                        <Input id="expiry-date" placeholder="MM/AA" />
-                    </div>
-                    <div className="space-y-2">
-                        <Label htmlFor="cvc">CVC</Label>
-                        <Input id="cvc" placeholder="123" />
-                    </div>
-                 </div>
-              </div>
+              <Alert>
+                <Banknote className="h-4 w-4" />
+                <AlertTitle>Instrucciones de Transferencia</AlertTitle>
+                <AlertDescription>
+                  <div className="text-sm space-y-1">
+                    <p><strong>Banco:</strong> BBVA México</p>
+                    <p><strong>Beneficiario:</strong> InmoTecnología S.A. de C.V.</p>
+                    <p><strong>CLABE:</strong> 012180012345678901</p>
+                    <p><strong>Referencia:</strong> 12345</p>
+                  </div>
+                  <p className="mt-2 text-xs text-muted-foreground">
+                    Una vez realizada la transferencia, el saldo puede tardar hasta 24 horas en reflejarse en tu cuenta.
+                  </p>
+                </AlertDescription>
+              </Alert>
             </CardContent>
             <CardFooter>
-              <Button className="w-full font-bold" size="lg">Pagar de forma segura</Button>
+              <Button className="w-full font-bold" size="lg">Confirmar Recarga</Button>
             </CardFooter>
           </Card>
         </div>
