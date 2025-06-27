@@ -23,8 +23,8 @@ export async function signInWithGoogle() {
       title = "Dominio no autorizado";
       description = "Este dominio no está autorizado. Asegúrate de que 'localhost' esté en los 'Dominios autorizados' de Firebase y que 'http://localhost:9002' esté en los 'Orígenes de JavaScript autorizados' en Google Cloud.";
     } else if (error.code === 'auth/internal-error') {
-       title = "Error Interno de Autenticación";
-       description = "Ocurrió un error en el servidor de autenticación. Verifica que la 'API de Identity Toolkit' y la pantalla de consentimiento de OAuth estén configuradas correctamente en Google Cloud.";
+       title = "Error de Configuración";
+       description = "Hay un error de configuración. Verifica en la Consola de Google Cloud que en 'Orígenes de JavaScript autorizados' esté 'http://localhost:9002' y que en 'URI de redireccionamiento autorizados' esté el handler de Firebase.";
     }
 
     toast({
