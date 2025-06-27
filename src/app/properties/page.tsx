@@ -3,7 +3,7 @@ import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
-import { ArrowRight, Calendar, Landmark, TrendingUp } from "lucide-react";
+import { ArrowRight, Info, Landmark, TrendingUp } from "lucide-react";
 
 export default function PropertiesPage() {
   return (
@@ -45,8 +45,8 @@ export default function PropertiesPage() {
 
             <div className="space-y-3">
               <h3 className="font-semibold text-base flex items-center gap-2">
-                <Calendar className="w-5 h-5 text-primary" />
-                Plazo de Retorno
+                <Info className="w-5 h-5 text-primary" />
+                Información de Inversión
               </h3>
               <p className="text-sm text-muted-foreground">
                 Tu inversión genera un retorno diario. Puedes retirar tus ganancias al finalizar el plazo de inversión. Ofrecemos plazos flexibles de <strong>1, 7, 14 y 30 días</strong>.
