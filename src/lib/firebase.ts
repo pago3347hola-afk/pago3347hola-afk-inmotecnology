@@ -2,12 +2,12 @@ import { initializeApp, getApps, getApp } from "firebase/app";
 import { getAuth } from "firebase/auth";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyCVfF4LlvpIsap-vfuplbhBMBXvz_dT47g",
-  authDomain: "inmotecnologa-hub.firebaseapp.com",
-  projectId: "inmotecnologa-hub",
-  storageBucket: "inmotecnologa-hub.firebasestorage.app",
-  messagingSenderId: "755441536028",
-  appId: "1:755441536028:web:1c336f159254098e5be3d9"
+  apiKey: "TU_API_KEY_AQUÍ",
+  authDomain: "TU_AUTH_DOMAIN_AQUÍ",
+  projectId: "TU_PROJECT_ID_AQUÍ",
+  storageBucket: "TU_STORAGE_BUCKET_AQUÍ",
+  messagingSenderId: "TU_MESSAGING_SENDER_ID_AQUÍ",
+  appId: "TU_APP_ID_AQUÍ"
 };
 
 // Initialize Firebase
