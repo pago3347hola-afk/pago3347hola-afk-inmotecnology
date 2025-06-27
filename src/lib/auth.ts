@@ -15,7 +15,11 @@ export async function signInWithGoogle() {
     // to their account page or storing user info in your app's state.
     window.location.href = '/account';
   } catch (error: any) {
-    // Handle Errors here.
+    // Don't treat closing the popup as a critical error.
+    if (error.code === 'auth/popup-closed-by-user' || error.code === 'auth/cancelled-popup-request') {
+      return;
+    }
+    // Handle other errors here.
     console.error("Authentication Error:", error.message);
   }
 }

@@ -22,13 +22,8 @@ function GoogleIcon(props: React.SVGProps<SVGSVGElement>) {
 
 export default function SignupPage() {
   const handleGoogleSignIn = async () => {
-    try {
-      await signInWithGoogle();
-      // On success, you might want to redirect the user.
-      // e.g., window.location.href = '/account';
-    } catch (error) {
-      console.error("Google Sign-In Error", error);
-    }
+    // The signInWithGoogle function handles its own errors and redirection.
+    await signInWithGoogle();
   };
 
   return (
