@@ -84,15 +84,15 @@ export default function PropertiesPage() {
         <Card className="overflow-hidden rounded-xl border-0 shadow-none">
           <CardHeader className="p-0">
              <Image
-              src="https://assets.easybroker.com/property_images/3087419/49199674/EB-KV7419.jpg?version=1656742144"
-              data-ai-hint="modern house luxury"
-              alt="casa zafiro ejecutiva"
+              src="https://http2.mlstatic.com/D_NQ_NP_2X_815107-MLM81432530034_122024-F-residencia-en-venta-en-lomas-de-juriquilla-diseno-de-autor-materiales-premium.webp"
+              data-ai-hint="luxury residence modern"
+              alt="casa executive"
               width={800}
               height={500}
               className="w-full h-auto object-cover"
             />
             <div className="p-6">
-                <CardTitle className="font-headline text-3xl">casa zafiro ejecutiva</CardTitle>
+                <CardTitle className="font-headline text-3xl">casa executive</CardTitle>
             </div>
           </CardHeader>
           <CardContent className="p-6 space-y-6">
