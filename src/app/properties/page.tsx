@@ -16,13 +16,13 @@ export default function PropertiesPage() {
              <Image
               src="https://images.unsplash.com/photo-1580587771525-78b9dba3b914"
               data-ai-hint="modern house pool"
-              alt="Villa de lujo con alberca"
+              alt="Casa de campo con alberca y vista a las montañas"
               width={800}
               height={500}
               className="w-full h-auto object-cover"
             />
             <div className="p-6">
-                <CardTitle className="font-headline text-3xl">Villa de Lujo</CardTitle>
+                <CardTitle className="font-headline text-3xl">Casa de Campo con Alberca</CardTitle>
             </div>
           </CardHeader>
           <CardContent className="p-6 space-y-6">
