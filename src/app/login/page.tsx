@@ -34,7 +34,7 @@ export default function LoginPage() {
       
       let description = "Ocurrió un error inesperado. Por favor, inténtalo de nuevo.";
       if (error.code === 'auth/unauthorized-domain') {
-        description = "Este dominio no está autorizado. Por favor, añade 'localhost' a los dominios autorizados en tu consola de Firebase.";
+        description = "Dominio no autorizado. Por favor, verifica en tu consola de Firebase que has añadido 'localhost' (exactamente esa palabra, sin .com ni espacios) a la lista de dominios autorizados.";
       }
       
       toast({
