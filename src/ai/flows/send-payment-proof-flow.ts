@@ -3,14 +3,14 @@
  * @fileOverview A flow for sending a payment proof email.
  *
  * - sendPaymentProof - A function that handles sending the payment proof.
- * - SendPaymentProofInput - The input type for the sendPaymentProof function.
+ * - SendPaymentProofInput - The input type for the sendPaymentproof function.
  * - SendPaymentProofOutput - The return type for the sendPaymentProof function.
  */
 
 import { ai } from '@/ai/genkit';
 import { z } from 'genkit';
 
-export const SendPaymentProofInputSchema = z.object({
+const SendPaymentProofInputSchema = z.object({
   userEmail: z.string().describe('The email address of the user sending the payment proof.'),
   photoDataUri: z
     .string()
@@ -20,7 +20,7 @@ export const SendPaymentProofInputSchema = z.object({
 });
 export type SendPaymentProofInput = z.infer<typeof SendPaymentProofInputSchema>;
 
-export const SendPaymentProofOutputSchema = z.object({
+const SendPaymentProofOutputSchema = z.object({
   success: z.boolean(),
   message: z.string(),
 });
