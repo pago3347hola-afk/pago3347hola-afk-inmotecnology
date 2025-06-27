@@ -28,15 +28,33 @@ export async function signInWithGoogle() {
       const currentHostname = window.location.hostname;
       const currentOrigin = window.location.origin;
 
-      title = "Error: Dominio no Autorizado";
-      description = `El dominio desde el que operas no está en la lista de permitidos. Por favor, verifica estos dos puntos: (1) En Firebase > Authentication > Settings > Authorized domains, asegúrate de que '${currentHostname}' esté en la lista. (2) En Google Cloud > APIs & Services > Credentials, edita tu clave de API web y en "Website restrictions", añade '${currentOrigin}'.`;
+      title = "Error Crítico: Dominio no Autorizado";
+      description = `Tu aplicación se está ejecutando desde una URL que no está autorizada para usar los servicios de Firebase.
+      
+Causa: El dominio '${currentHostname}' no está en la lista de sitios web permitidos en la configuración de tu Clave de API de Google Cloud.
+
+SOLUCIÓN - PASO A PASO:
+
+1. Ve a la Consola de Google Cloud > Credenciales.
+
+2. Edita la Clave de API:
+Busca la clave llamada "Browser key (auto created by Firebase)" y haz clic en su nombre.
+
+3. Añade tu Dominio:
+- En "Restricciones de aplicaciones", selecciona "Sitios web".
+- Haz clic en "AÑADIR".
+- Pega la siguiente URL exacta: ${currentOrigin}
+
+4. Guarda los Cambios.
+
+Tras guardar, espera un minuto y vuelve a intentarlo.`;
     }
 
     toast({
       variant: "destructive",
       title: title,
       description: description,
-      duration: 20000,
+      duration: 30000,
     });
   }
 }
