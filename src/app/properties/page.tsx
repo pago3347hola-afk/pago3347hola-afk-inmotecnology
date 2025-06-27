@@ -158,13 +158,13 @@ export default function PropertiesPage() {
              <Image
               src="https://i0.wp.com/epmqro.com/wp-content/uploads/2020/08/2.1.jpeg?fit=800%2C600&ssl=1"
               data-ai-hint="modern house exterior"
-              alt="casa executive"
+              alt="hacienda luxury"
               width={800}
               height={500}
               className="w-full h-auto object-cover"
             />
             <div className="p-6">
-                <CardTitle className="font-headline text-3xl">casa executive</CardTitle>
+                <CardTitle className="font-headline text-3xl">hacienda luxury</CardTitle>
             </div>
           </CardHeader>
           <CardContent className="p-6 space-y-6">
