@@ -11,50 +11,41 @@ export async function signInWithGoogle() {
     await signInWithPopup(auth, provider);
     window.location.href = '/account';
   } catch (error: any) {
-    let title = "Error de inicio de sesión";
-    let description = `Ocurrió un error inesperado. Por favor, inténtalo de nuevo. (${error.code || 'Unknown error'})`;
-    
     console.error("Error de Autenticación de Firebase:", error);
 
-    if (error.code === 'auth/popup-closed-by-user' || error.code === 'auth/cancelled-popup-request') {
-      console.log("Inicio de sesión cancelado por el usuario.");
-      return;
-    }
+    let title = "Error de inicio de sesión";
+    let description = "Ocurrió un error inesperado. Por favor, inténtalo de nuevo.";
 
-    if (error.code === 'auth/popup-blocked') {
-      title = "Ventana emergente bloqueada";
-      description = "Tu navegador ha bloqueado la ventana de inicio de sesión. Por favor, busca un ícono en la barra de direcciones para permitir las ventanas emergentes y vuelve a intentarlo.";
-    } else if (error.code === 'auth/unauthorized-domain' || (error.message && error.message.includes('requests-from-referer'))) {
-      const currentHostname = window.location.hostname;
-      const currentOrigin = window.location.origin;
-
-      title = "Error Crítico: Dominio no Autorizado";
-      description = `Tu aplicación se está ejecutando desde una URL que no está autorizada para usar los servicios de Firebase.
-      
-Causa: El dominio '${currentHostname}' no está en la lista de sitios web permitidos en la configuración de tu Clave de API de Google Cloud.
-
-SOLUCIÓN - PASO A PASO:
-
-1. Ve a la Consola de Google Cloud > Credenciales.
-
-2. Edita la Clave de API:
-Busca la clave llamada "Browser key (auto created by Firebase)" y haz clic en su nombre.
-
-3. Añade tu Dominio:
-- En "Restricciones de aplicaciones", selecciona "Sitios web".
-- Haz clic en "AÑADIR".
-- Pega la siguiente URL exacta: ${currentOrigin}
-
-4. Guarda los Cambios.
-
-Tras guardar, espera un minuto y vuelve a intentarlo.`;
+    if (error.code) {
+        switch (error.code) {
+            case 'auth/popup-closed-by-user':
+            case 'auth/cancelled-popup-request':
+                // No mostramos una notificación para esto, es una acción normal del usuario.
+                return;
+            case 'auth/popup-blocked':
+                title = "Ventana emergente bloqueada";
+                description = "Tu navegador ha bloqueado la ventana de inicio de sesión. Por favor, permite las ventanas emergentes para este sitio.";
+                break;
+            case 'auth/unauthorized-domain':
+                title = "Dominio no Autorizado";
+                description = "Este dominio no está autorizado para realizar operaciones de autenticación. Revisa la configuración de tu proyecto en Firebase.";
+                break;
+            default:
+                if (error.message && error.message.includes('requests-from-referer')) {
+                  title = "Dominio no Autorizado";
+                  description = "La URL desde la que se ejecuta la aplicación no está permitida. Asegúrate de añadirla en las 'Restricciones de clave de API' de Google Cloud.";
+                } else {
+                  description = `Ocurrió un error: ${error.code}. Revisa la consola para más detalles.`;
+                }
+                break;
+        }
     }
 
     toast({
       variant: "destructive",
       title: title,
       description: description,
-      duration: 30000,
+      duration: 9000,
     });
   }
 }
