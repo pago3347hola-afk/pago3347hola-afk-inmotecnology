@@ -152,6 +152,77 @@ export default function PropertiesPage() {
             </Button>
           </CardFooter>
         </Card>
+
+        <Card className="overflow-hidden rounded-xl border-0 shadow-none">
+          <CardHeader className="p-0">
+             <Image
+              src="https://http2.mlstatic.com/D_NQ_NP_2X_815107-MLM81432530034_122024-F-residencia-en-venta-en-lomas-de-juriquilla-diseno-de-autor-materiales-premium.webp"
+              data-ai-hint="luxury residence modern"
+              alt="casa executive"
+              width={800}
+              height={500}
+              className="w-full h-auto object-cover"
+            />
+            <div className="p-6">
+                <CardTitle className="font-headline text-3xl">casa executive</CardTitle>
+            </div>
+          </CardHeader>
+          <CardContent className="p-6 space-y-6">
+            <div className="grid grid-cols-2 gap-4 text-sm">
+                <div className="flex items-center gap-2">
+                    <Landmark className="w-5 h-5 text-primary" />
+                    <div>
+                        <p className="text-muted-foreground">Costo de Inversión</p>
+                        <p className="font-bold text-lg">$500.00 MXN</p>
+                    </div>
+                </div>
+                <div className="flex items-center gap-2">
+                    <TrendingUp className="w-5 h-5 text-primary" />
+                     <div>
+                        <p className="text-muted-foreground">Retorno Diario</p>
+                        <p className="font-bold text-lg">10%</p>
+                    </div>
+                </div>
+            </div>
+
+            <Separator />
+
+            <Accordion type="single" collapsible className="w-full">
+              <AccordionItem value="investment-info-3" className="border-b-0">
+                <AccordionTrigger className="py-3 hover:no-underline">
+                  <span className="font-semibold text-base flex items-center gap-2">
+                    <Info className="w-5 h-5 text-primary" />
+                    Información de Inversión
+                  </span>
+                </AccordionTrigger>
+                <AccordionContent>
+                  <div className="grid grid-cols-3 gap-4 pt-2">
+                    <div className="bg-muted/30 p-3 rounded-lg text-center">
+                        <p className="text-xs text-muted-foreground">Ingresos Diarios</p>
+                        <p className="font-bold text-base text-foreground">$50 MXN</p>
+                    </div>
+                     <div className="bg-muted/30 p-3 rounded-lg text-center">
+                        <p className="text-xs text-muted-foreground">Ingresos Semanales</p>
+                        <p className="font-bold text-base text-foreground">$350 MXN</p>
+                    </div>
+                     <div className="bg-muted/30 p-3 rounded-lg text-center">
+                        <p className="text-xs text-muted-foreground">Ingresos Mensuales</p>
+                        <p className="font-bold text-base text-foreground">$1500 MXN</p>
+                    </div>
+                  </div>
+                </AccordionContent>
+              </AccordionItem>
+            </Accordion>
+          </CardContent>
+          <CardFooter className="bg-muted/20 p-6">
+            <Button asChild className="w-full font-bold" size="lg">
+              <Link href="/account/recharge">
+                Invierte Ahora
+                <ArrowRight className="ml-2 h-5 w-5" />
+              </Link>
+            </Button>
+          </CardFooter>
+        </Card>
       </div>
     </div>
   );
