@@ -227,7 +227,7 @@ export default function PropertiesPage() {
         <Card className="overflow-hidden rounded-xl border-0 shadow-none">
           <CardHeader className="p-0">
              <Image
-              src="https://i0.wp.com/epmqro.com/wp-content/uploads/2020/08/2.1.jpeg?fit=800%2C600&ssl=1"
+              src="https://i0.wp.com/epmqro.com/wp-content/uploads/2023/01/22-2.jpg?resize=1024%2C623&ssl=1"
               data-ai-hint="luxury mansion"
               alt="billionaire property"
               width={800}
