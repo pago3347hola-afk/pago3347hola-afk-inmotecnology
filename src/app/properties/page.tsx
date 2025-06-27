@@ -87,13 +87,13 @@ export default function PropertiesPage() {
              <Image
               src="https://http2.mlstatic.com/D_NQ_NP_2X_815107-MLM81432530034_122024-F-residencia-en-venta-en-lomas-de-juriquilla-diseno-de-autor-materiales-premium.webp"
               data-ai-hint="luxury residence modern"
-              alt="casa executive"
+              alt="casa ejecutiva"
               width={800}
               height={500}
               className="w-full h-auto object-cover"
             />
             <div className="p-6">
-                <CardTitle className="font-headline text-3xl">casa executive</CardTitle>
+                <CardTitle className="font-headline text-3xl">casa ejecutiva</CardTitle>
             </div>
           </CardHeader>
           <CardContent className="p-6 space-y-6">
