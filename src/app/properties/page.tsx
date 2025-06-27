@@ -16,7 +16,7 @@ export default function PropertiesPage() {
              <Image
               src="https://images.unsplash.com/photo-1564013799919-ab600027ffc6"
               data-ai-hint="country house pool"
-              alt="Casa de campo humilde con alberca"
+              alt="Casa de campo sencilla con alberca"
               width={800}
               height={500}
               className="w-full h-auto object-cover"
