@@ -19,6 +19,15 @@ export async function signInWithGoogle() {
     if (error.code === 'auth/popup-closed-by-user' || error.code === 'auth/cancelled-popup-request') {
       return;
     }
+    
+    if (error.code === 'auth/unauthorized-domain') {
+      console.error(
+        'Authentication Error: This domain is not authorized. ' +
+        'Please go to the Firebase Console > Authentication > Settings > Authorized domains, and add "localhost".'
+      );
+      return;
+    }
+
     // Handle other errors here.
     console.error("Authentication Error:", error.message);
   }
