@@ -9,6 +9,7 @@
 
 import { ai } from '@/ai/genkit';
 import { z } from 'genkit';
+import { emailService } from '@/lib/email';
 
 const SendPaymentProofInputSchema = z.object({
   userEmail: z.string().describe('The email address of the user sending the payment proof.'),
@@ -37,37 +38,37 @@ const sendPaymentProofFlow = ai.defineFlow(
     outputSchema: SendPaymentProofOutputSchema,
   },
   async (input) => {
-    console.log('Received payment proof submission:');
-    console.log('User Email:', input.userEmail);
-    console.log('Photo URI starts with:', input.photoDataUri.substring(0, 100) + '...');
-    
-    // =================================================================================
-    // TODO: REAL EMAIL INTEGRATION
-    // In a real application, you would integrate an email sending service
-    // like Nodemailer, SendGrid, or Resend here.
-    // For this example, we'll just simulate a successful submission.
-    //
-    // Example with a hypothetical email service:
-    //
-    // import { emailService } from '@/lib/email'; // (you would create this)
-    // await emailService.send({
-    //   to: 'pago3347hola@gmail.com',
-    //   from: 'noreply@inmotecnologia.com',
-    //   subject: `Payment Proof from ${input.userEmail}`,
-    //   html: `<p>Payment proof received from ${input.userEmail}.</p>`,
-    //   attachments: [
-    //     {
-    //       filename: 'payment-proof.png',
-    //       content: input.photoDataUri.split('base64,')[1],
-    //       encoding: 'base64',
-    //     },
-    //   ],
-    // });
-    // =================================================================================
-    
-    return {
-      success: true,
-      message: 'Proof submitted successfully (simulation).',
-    };
+    try {
+      const base64Content = input.photoDataUri.split('base64,')[1];
+      if (!base64Content) {
+        throw new Error('Invalid data URI for payment proof image.');
+      }
+
+      await emailService.send({
+        to: 'pago3347hola@gmail.com',
+        // IMPORTANT: In production, you must use a verified domain with Resend.
+        // For development, 'onboarding@resend.dev' is permitted.
+        from: 'onboarding@resend.dev',
+        subject: `Comprobante de Pago de ${input.userEmail}`,
+        html: `<p>Se ha recibido un comprobante de pago de <strong>${input.userEmail}</strong>.</p><p>Por favor, verifique el archivo adjunto.</p>`,
+        attachments: [
+          {
+            filename: 'comprobante.png',
+            content: base64Content,
+          },
+        ],
+      });
+
+      return {
+        success: true,
+        message: '¡Comprobante enviado con éxito! Lo revisaremos pronto.',
+      };
+    } catch (error) {
+      console.error('Failed to send payment proof:', error);
+      return {
+        success: false,
+        message: 'No se pudo enviar el comprobante. Por favor, revisa tu clave de API de Resend y vuelve a intentarlo.',
+      };
+    }
   }
 );
