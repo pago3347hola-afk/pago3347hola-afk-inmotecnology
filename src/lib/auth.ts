@@ -23,18 +23,19 @@ export async function signInWithGoogle() {
         description: "Tu navegador ha bloqueado la ventana de inicio de sesión. Por favor, permite las ventanas emergentes para este sitio y vuelve a intentarlo.",
         duration: 9000,
       });
-    } else if (error.code === 'auth/unauthorized-domain') {
-       toast({
+    } else if (error.code === 'auth/unauthorized-domain' || (error.message && error.message.includes('requests-from-referer'))) {
+      const currentHostname = window.location.hostname;
+      toast({
         variant: "destructive",
         title: "Error: Dominio no Autorizado",
-        description: "Revisa las 'Restricciones de clave de API' en la consola de Google Cloud para asegurar que http://localhost:9002 está permitido.",
+        description: `El dominio ${currentHostname} no está autorizado. Por favor, añádelo a la lista de dominios autorizados en la configuración de Firebase.`,
         duration: 9000,
       });
     } else {
        toast({
         variant: "destructive",
         title: "Error de inicio de sesión",
-        description: `Ocurrió un error. Por favor, inténtalo de nuevo. (${error.code})`,
+        description: `Ocurrió un error. Por favor, inténtalo de nuevo. (${error.code || 'Unknown error'})`,
       });
     }
     
