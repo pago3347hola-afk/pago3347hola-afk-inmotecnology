@@ -8,6 +8,7 @@ import { Label } from "@/components/ui/label";
 import { LogIn } from "lucide-react";
 import { Logo } from "@/components/logo";
 import { signInWithGoogle } from "@/lib/auth";
+import { useToast } from "@/hooks/use-toast";
 
 function GoogleIcon(props: React.SVGProps<SVGSVGElement>) {
   return (
@@ -20,9 +21,28 @@ function GoogleIcon(props: React.SVGProps<SVGSVGElement>) {
 }
 
 export default function LoginPage() {
+  const { toast } = useToast();
+
   const handleGoogleSignIn = async () => {
-    // The signInWithGoogle function handles its own errors and redirection.
-    await signInWithGoogle();
+    try {
+      await signInWithGoogle();
+    } catch (error: any) {
+      if (error.code === 'auth/popup-closed-by-user' || error.code === 'auth/cancelled-popup-request') {
+        // User cancelled the login, do nothing.
+        return;
+      }
+      
+      let description = "Ocurrió un error inesperado. Por favor, inténtalo de nuevo.";
+      if (error.code === 'auth/unauthorized-domain') {
+        description = "Este dominio no está autorizado. Por favor, añade 'localhost' a los dominios autorizados en tu consola de Firebase.";
+      }
+      
+      toast({
+        variant: "destructive",
+        title: "Error de inicio de sesión",
+        description: description,
+      });
+    }
   };
 
   return (
