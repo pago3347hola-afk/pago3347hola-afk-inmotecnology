@@ -2,8 +2,6 @@ import Image from "next/image";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
-import { Label } from "@/components/ui/label";
-import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Separator } from "@/components/ui/separator";
 import { ArrowRight, Calendar, Landmark, TrendingUp } from "lucide-react";
 
@@ -45,29 +43,14 @@ export default function PropertiesPage() {
 
             <Separator />
 
-            <div className="space-y-4">
-              <Label className="font-semibold text-base flex items-center gap-2">
+            <div className="space-y-3">
+              <h3 className="font-semibold text-base flex items-center gap-2">
                 <Calendar className="w-5 h-5 text-primary" />
-                Selecciona el Plazo de Retorno
-              </Label>
-              <RadioGroup defaultValue="7d" className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                {[
-                  { value: "1d", label: "1 Día" },
-                  { value: "7d", label: "7 Días" },
-                  { value: "14d", label: "14 Días" },
-                  { value: "30d", label: "30 Días" },
-                ].map((option) => (
-                  <div key={option.value}>
-                    <RadioGroupItem value={option.value} id={option.value} className="sr-only" />
-                    <Label
-                      htmlFor={option.value}
-                      className="flex flex-col items-center justify-between rounded-md border-2 border-muted bg-popover p-4 hover:bg-accent hover:text-accent-foreground peer-data-[state=checked]:border-primary [&:has([data-state=checked])]:border-primary cursor-pointer transition-all"
-                    >
-                      {option.label}
-                    </Label>
-                  </div>
-                ))}
-              </RadioGroup>
+                Plazo de Retorno
+              </h3>
+              <p className="text-sm text-muted-foreground">
+                Tu inversión genera un retorno diario. Puedes retirar tus ganancias al finalizar el plazo de inversión. Ofrecemos plazos flexibles de <strong>1, 7, 14 y 30 días</strong>.
+              </p>
             </div>
           </CardContent>
           <CardFooter className="bg-muted/20 p-6">
