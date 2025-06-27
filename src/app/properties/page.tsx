@@ -10,7 +10,7 @@ export default function PropertiesPage() {
   return (
     <div className="container mx-auto px-4 md:px-6 py-12 bg-secondary/20">
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 max-w-6xl mx-auto">
-        <Card className="overflow-hidden shadow-lg rounded-xl">
+        <Card className="overflow-hidden rounded-xl border-0 shadow-none">
           <CardHeader className="p-0">
              <Image
               src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSu1o0NyUqFdZF6kxB1JvRge3lrCkSlHlRwMvAGPQeZ5WLiCKazKrGJiKAF&s=10"
@@ -81,7 +81,7 @@ export default function PropertiesPage() {
           </CardFooter>
         </Card>
 
-        <Card className="overflow-hidden shadow-lg rounded-xl">
+        <Card className="overflow-hidden rounded-xl border-0 shadow-none">
           <CardHeader className="p-0">
              <Image
               src="https://assets.easybroker.com/property_images/3087419/49199674/EB-KV7419.jpg?version=1656742144"
