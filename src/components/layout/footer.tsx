@@ -19,7 +19,6 @@ export function Footer() {
               <li><Link href="/properties" className="text-muted-foreground hover:text-foreground">Propiedades</Link></li>
               <li><Link href="/account" className="text-muted-foreground hover:text-foreground">Mi Cuenta</Link></li>
               <li><Link href="/support" className="text-muted-foreground hover:text-foreground">Soporte</Link></li>
-              <li><Link href="#" className="text-muted-foreground hover:text-foreground">Términos de Servicio</Link></li>
             </ul>
           </div>
           <div>
