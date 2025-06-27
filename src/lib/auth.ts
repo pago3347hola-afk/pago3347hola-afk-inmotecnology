@@ -16,7 +16,14 @@ export async function signInWithGoogle() {
       return;
     }
 
-    if (error.code === 'auth/unauthorized-domain') {
+    if (error.code === 'auth/popup-blocked') {
+       toast({
+        variant: "destructive",
+        title: "Ventana emergente bloqueada",
+        description: "Tu navegador ha bloqueado la ventana de inicio de sesión. Por favor, permite las ventanas emergentes para este sitio y vuelve a intentarlo.",
+        duration: 9000,
+      });
+    } else if (error.code === 'auth/unauthorized-domain') {
        toast({
         variant: "destructive",
         title: "Error: Dominio no Autorizado",
