@@ -32,14 +32,17 @@ export default function LoginPage() {
         return;
       }
       
-      let description = "Ocurrió un error inesperado. Por favor, inténtalo de nuevo.";
+      let title = "Error de inicio de sesión";
+      let description = `Ocurrió un error inesperado. Por favor, inténtalo de nuevo. (${error.message})`;
+
       if (error.code === 'auth/unauthorized-domain') {
-        description = "Este dominio no está autorizado. Revisa que 'localhost' esté en 'Dominios autorizados' de Firebase y que 'http://localhost:9002' esté en los 'Orígenes de JavaScript autorizados' en Google Cloud.";
+        title = "Dominio no autorizado";
+        description = "Este dominio no está autorizado. Revisa que 'localhost' esté en los 'Dominios autorizados' de Firebase y que 'http://localhost:9002' esté en los 'Orígenes de JavaScript autorizados' en Google Cloud. Los cambios pueden tardar unos minutos en aplicarse.";
       }
       
       toast({
         variant: "destructive",
-        title: "Error de inicio de sesión",
+        title: title,
         description: description,
       });
     }
