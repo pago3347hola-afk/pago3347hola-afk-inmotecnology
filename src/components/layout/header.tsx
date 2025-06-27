@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
-import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
+import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
 import { Menu, Home, BatteryCharging, Banknote, LifeBuoy, LogIn, UserPlus } from "lucide-react";
 import { Logo } from "@/components/logo";
 
@@ -56,9 +56,12 @@ export function Header() {
                 <span className="sr-only">Abrir menú</span>
               </Button>
             </SheetTrigger>
-            <SheetContent side="right">
-              <div className="flex flex-col p-6">
-                <Link href="/" className="mb-6" onClick={() => setIsOpen(false)}>
+            <SheetContent side="right" className="flex flex-col">
+              <SheetHeader>
+                <SheetTitle className="sr-only">Menú Principal</SheetTitle>
+              </SheetHeader>
+              <div className="p-6">
+                <Link href="/" className="mb-6 flex items-center" onClick={() => setIsOpen(false)}>
                   <Logo />
                 </Link>
                 <nav className="flex flex-col gap-4">
@@ -69,20 +72,20 @@ export function Header() {
                     </Link>
                   ))}
                 </nav>
-                <div className="mt-6 border-t pt-6 flex flex-col gap-2">
-                   <Button variant="ghost" asChild onClick={() => setIsOpen(false)}>
-                    <Link href="/login">
-                      <LogIn className="mr-2 h-4 w-4" />
-                      Iniciar Sesión
-                    </Link>
-                  </Button>
-                  <Button asChild onClick={() => setIsOpen(false)}>
-                    <Link href="/signup">
-                      <UserPlus className="mr-2 h-4 w-4" />
-                      Crear Cuenta
-                    </Link>
-                  </Button>
-                </div>
+              </div>
+              <div className="mt-auto border-t p-6 flex flex-col gap-2">
+                  <Button variant="ghost" asChild onClick={() => setIsOpen(false)}>
+                  <Link href="/login">
+                    <LogIn className="mr-2 h-4 w-4" />
+                    Iniciar Sesión
+                  </Link>
+                </Button>
+                <Button asChild onClick={() => setIsOpen(false)}>
+                  <Link href="/signup">
+                    <UserPlus className="mr-2 h-4 w-4" />
+                    Crear Cuenta
+                  </Link>
+                </Button>
               </div>
             </SheetContent>
           </Sheet>
