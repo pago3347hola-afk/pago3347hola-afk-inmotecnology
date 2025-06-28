@@ -46,15 +46,24 @@ const sendPaymentProofFlow = ai.defineFlow(
       }
 
       const { data } = await emailService.send({
-        // DEVELOPMENT NOTE: Changed 'to' to use the user's email for easier testing with Resend's sandbox.
-        // In production with a verified domain, this should be a fixed admin email like 'pago3347hola@gmail.com'.
-        to: input.userEmail,
+        // IMPORTANT: In Resend's sandbox, 'from' MUST be 'onboarding@resend.dev'
         from: 'onboarding@resend.dev',
+        // IMPORTANT: In Resend's sandbox, 'to' can ONLY be the email you signed up to Resend with.
+        to: input.userEmail,
         subject: `[PRUEBA] Comprobante de Pago de ${input.userEmail}`,
-        html: `<p>Se ha recibido un comprobante de pago de <strong>${input.userEmail}</strong>.</p>
-               <p>Por favor, verifique el archivo adjunto.</p>
-               <hr>
-               <p><em>Nota: Este es un correo de prueba. El destinatario ha sido cambiado a ${input.userEmail} para fines de desarrollo con Resend.</em></p>`,
+        html: `
+          <p>Se ha recibido un comprobante de pago de <strong>${input.userEmail}</strong>.</p>
+          <p>Por favor, verifique el archivo adjunto.</p>
+          <hr>
+          <h3>NOTA IMPORTANTE PARA DESARROLLO:</h3>
+          <p>Este es un correo de prueba enviado desde la aplicación InmoTecnología.</p>
+          <ul>
+            <li><strong>Remitente:</strong> onboarding@resend.dev (Modo Sandbox de Resend)</li>
+            <li><strong>Destinatario de prueba:</strong> ${input.userEmail}</li>
+            <li><strong>Destinatario final (en producción):</strong> pago3347hola@gmail.com</li>
+          </ul>
+          <p>Si estás recibiendo este correo, ¡la integración con Resend funciona!</p>
+        `,
         attachments: [
           {
             filename: 'comprobante.png',
@@ -65,7 +74,7 @@ const sendPaymentProofFlow = ai.defineFlow(
 
       return {
         success: true,
-        message: '¡Comprobante enviado con éxito! Lo revisaremos pronto.',
+        message: `¡Prueba exitosa! Email enviado a ${input.userEmail}.`,
         emailId: data?.id,
       };
     } catch (error) {
@@ -73,11 +82,9 @@ const sendPaymentProofFlow = ai.defineFlow(
       
       let friendlyMessage = 'No se pudo enviar el comprobante. Por favor, inténtalo de nuevo más tarde.';
       if (error instanceof Error) {
-        // Check for the specific Resend development mode error.
         if (error.message.includes('you can only send emails to your own email address')) {
-           friendlyMessage = 'Error de Resend: Cuando usas "onboarding@resend.dev", solo puedes enviar correos a tu propio email (el que usaste para registrarte en Resend). Verifica que el correo de destino sea el correcto o configura un dominio verificado en Resend para enviar a otras direcciones.';
+           friendlyMessage = `Error de Resend: El modo de prueba solo permite enviar correos a tu email verificado en Resend. Asegúrate que el correo que introdujiste (${input.userEmail}) sea el mismo con el que te registraste en resend.com.`;
         } else {
-           // For other errors, show the actual message.
            friendlyMessage = `Ocurrió un error al enviar: ${error.message}`;
         }
       }

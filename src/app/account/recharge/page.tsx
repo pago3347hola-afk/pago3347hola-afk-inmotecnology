@@ -57,8 +57,8 @@ export default function RechargePage() {
 
       if (result.success) {
         toast({
-          title: "Comprobante de Prueba Enviado",
-          description: `¡Éxito! Tu comprobante fue enviado a ${email}. Revisa tu bandeja de entrada (y spam). Para producción, necesitarás un dominio verificado en Resend.`,
+          title: "¡Prueba de Envío Exitosa!",
+          description: `Se envió un correo de prueba a ${email}. Revisa tu bandeja de entrada. Si no lo recibes, verifica que ${email} sea tu email de registro en Resend.`,
           duration: 15000,
         });
 
