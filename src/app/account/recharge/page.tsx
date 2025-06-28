@@ -57,8 +57,8 @@ export default function RechargePage() {
 
       if (result.success) {
         toast({
-          title: "Comprobante Enviado",
-          description: `¡Éxito! Tu comprobante fue aceptado para envío. ID: ${result.emailId || 'N/A'}. Revisa la bandeja de entrada (y spam) de 'pago3347hola@gmail.com'.`,
+          title: "Comprobante de Prueba Enviado",
+          description: `¡Éxito! Tu comprobante fue enviado a ${email}. Revisa tu bandeja de entrada (y spam). Para producción, necesitarás un dominio verificado en Resend.`,
           duration: 15000,
         });
 
@@ -148,7 +148,7 @@ export default function RechargePage() {
                     <Input id="recipient-email" type="email" value="pago3347hola@gmail.com" readOnly className="bg-muted/50 cursor-default" />
                 </div>
                 <div className="space-y-2">
-                    <Label htmlFor="user-email">Correo electrónico del usuario que envió el pago</Label>
+                    <Label htmlFor="user-email">Tu correo electrónico (para recibir la prueba)</Label>
                     <Input id="user-email" type="email" placeholder="tu@email.com" value={email} onChange={(e) => setEmail(e.target.value)} />
                 </div>
                 <div className="space-y-2">

@@ -16,7 +16,7 @@ const SendPaymentProofInputSchema = z.object({
   photoDataUri: z
     .string()
     .describe(
-      "A photo of the payment proof, as a data URI that must include a MIME type and use Base64 encoding. Expected format: 'data:<mimetype>;base64,<encoded_data>'."
+      "A photo of the payment proof, as a data URI that must include a MIME type and use Base64 encoding. Expected format: 'data:<mimetype>;base64,<encoded_data>'"
     ),
 });
 export type SendPaymentProofInput = z.infer<typeof SendPaymentProofInputSchema>;
@@ -46,12 +46,15 @@ const sendPaymentProofFlow = ai.defineFlow(
       }
 
       const { data } = await emailService.send({
-        to: 'pago3347hola@gmail.com',
-        // IMPORTANT: In production, you must use a verified domain with Resend.
-        // For development, 'onboarding@resend.dev' is permitted.
+        // DEVELOPMENT NOTE: Changed 'to' to use the user's email for easier testing with Resend's sandbox.
+        // In production with a verified domain, this should be a fixed admin email like 'pago3347hola@gmail.com'.
+        to: input.userEmail,
         from: 'onboarding@resend.dev',
-        subject: `Comprobante de Pago de ${input.userEmail}`,
-        html: `<p>Se ha recibido un comprobante de pago de <strong>${input.userEmail}</strong>.</p><p>Por favor, verifique el archivo adjunto.</p>`,
+        subject: `[PRUEBA] Comprobante de Pago de ${input.userEmail}`,
+        html: `<p>Se ha recibido un comprobante de pago de <strong>${input.userEmail}</strong>.</p>
+               <p>Por favor, verifique el archivo adjunto.</p>
+               <hr>
+               <p><em>Nota: Este es un correo de prueba. El destinatario ha sido cambiado a ${input.userEmail} para fines de desarrollo con Resend.</em></p>`,
         attachments: [
           {
             filename: 'comprobante.png',
