@@ -145,7 +145,7 @@ export default function RechargePage() {
                 </div>
                 <div className="space-y-2">
                     <Label htmlFor="recipient-email">Correo de destino</Label>
-                    <Input id="recipient-email" type="email" value="pago3347hola@gmail.com" readOnly className="bg-muted/50 cursor-default" />
+                    <Input id="recipient-email" type="email" value="onboarding@resend.dev" readOnly className="bg-muted/50 cursor-default" />
                 </div>
                 <div className="space-y-2">
                     <Label htmlFor="user-email">Tu email de registro en Resend</Label>
