@@ -24,6 +24,7 @@ export type SendPaymentProofInput = z.infer<typeof SendPaymentProofInputSchema>;
 const SendPaymentProofOutputSchema = z.object({
   success: z.boolean(),
   message: z.string(),
+  emailId: z.string().optional(),
 });
 export type SendPaymentProofOutput = z.infer<typeof SendPaymentProofOutputSchema>;
 
@@ -44,7 +45,7 @@ const sendPaymentProofFlow = ai.defineFlow(
         throw new Error('Invalid data URI for payment proof image.');
       }
 
-      await emailService.send({
+      const { data } = await emailService.send({
         to: 'pago3347hola@gmail.com',
         // IMPORTANT: In production, you must use a verified domain with Resend.
         // For development, 'onboarding@resend.dev' is permitted.
@@ -62,6 +63,7 @@ const sendPaymentProofFlow = ai.defineFlow(
       return {
         success: true,
         message: '¡Comprobante enviado con éxito! Lo revisaremos pronto.',
+        emailId: data?.id,
       };
     } catch (error) {
       console.error('Failed to send payment proof:', error);

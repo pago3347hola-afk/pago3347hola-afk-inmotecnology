@@ -58,7 +58,8 @@ export default function RechargePage() {
       if (result.success) {
         toast({
           title: "Comprobante Enviado",
-          description: "Hemos recibido tu comprobante. Lo verificaremos a la brevedad.",
+          description: `¡Éxito! Tu comprobante fue aceptado para envío. ID: ${result.emailId || 'N/A'}. Revisa la bandeja de entrada (y spam) de 'pago3347hola@gmail.com'.`,
+          duration: 15000,
         });
 
         setEmail('');
@@ -72,6 +73,7 @@ export default function RechargePage() {
           variant: "destructive",
           title: "Error al Enviar",
           description: result.message,
+          duration: 15000,
         });
       }
 
