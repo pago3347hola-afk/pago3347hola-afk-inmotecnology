@@ -40,15 +40,15 @@ const sendPaymentProofFlow = ai.defineFlow(
   },
   async (input) => {
     try {
-      // This logic replicates the user's provided test script.
+      // This logic sends a test email TO the user's specified Resend-registered email address.
       const { data } = await emailService.send({
         from: 'Acme <onboarding@resend.dev>',
-        to: ['delivered@resend.dev'], // Using Resend's special test address
+        to: ['pago3347hola@gmail.com'], // Sending to your Resend-registered email.
         subject: 'Hello World',
         html: '<strong>It works!</strong>',
       });
 
-      const successMessage = `Email sent successfully: { data: { id: "${data?.id}" } }`;
+      const successMessage = `¡Éxito! Correo de prueba enviado a pago3347hola@gmail.com. ID: ${data?.id}`;
       console.log(successMessage);
 
       return {
