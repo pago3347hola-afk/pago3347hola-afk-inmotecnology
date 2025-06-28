@@ -39,36 +39,32 @@ const sendPaymentProofFlow = ai.defineFlow(
     outputSchema: SendPaymentProofOutputSchema,
   },
   async (input) => {
-    try {
-      // Usando el código de prueba para confirmar la conexión con Resend.
-      // NOTA: 'onboarding@resend.dev' solo puede enviar a 'delivered@resend.dev' en el modo de prueba.
-      const { data } = await emailService.send({
-        from: 'Acme <onboarding@resend.dev>',
-        to: ['delivered@resend.dev'],
-        subject: 'Hola Mundo',
-        html: '<strong>¡Funciona!</strong>',
-      });
-      
-      const successMessage = `¡Éxito! Correo de prueba enviado a 'delivered@resend.dev'. ID: ${data?.id}. Esto confirma que tu clave de API de Resend es correcta.`;
-      console.log({ data });
+    // Usando el código de prueba para confirmar la conexión con Resend.
+    // NOTA: 'onboarding@resend.dev' solo puede enviar a 'delivered@resend.dev' en el modo de prueba.
+    const { data, error } = await emailService.send({
+      from: 'Acme <onboarding@resend.dev>',
+      to: ['delivered@resend.dev'],
+      subject: 'Hola Mundo',
+      html: '<strong>¡Funciona!</strong>',
+    });
 
-      return {
-        success: true,
-        message: successMessage,
-        emailId: data?.id,
-      };
-
-    } catch (error) {
-      let errorMessage = 'Ocurrió un error desconocido.';
-      if (error instanceof Error) {
-           errorMessage = `Error al enviar el correo: ${error.message}`;
-      }
-      console.error({ error });
-
+    if (error) {
+      // Construct a detailed error message from the Resend error object
+      const errorMessage = `Error al enviar el correo: ${error.message} (Código: ${error.name})`;
+      console.error('Flow failed to send email:', { error });
       return {
         success: false,
         message: errorMessage,
       };
     }
+
+    const successMessage = `¡Éxito! Correo de prueba enviado a 'delivered@resend.dev'. ID: ${data?.id}. Esto confirma que tu clave de API de Resend es correcta.`;
+    console.log({ data });
+
+    return {
+      success: true,
+      message: successMessage,
+      emailId: data?.id,
+    };
   }
 );

@@ -54,18 +54,22 @@ export const emailService = {
         attachments: params.attachments,
       });
 
+      // The Resend SDK v3 returns an error object on failure, it doesn't throw.
+      // We pass this result directly to the flow.
       if (error) {
-        // This will be caught by the calling flow
-        throw new Error(error.message);
+        console.error('Error from Resend API:', error);
+        return { data: null, error };
       }
 
       console.log(`Correo enviado exitosamente con ID: ${data?.id}`);
       return { data, error: null };
 
-    } catch (error) {
-        console.error('Error al enviar correo a través de Resend:', error);
-        // Re-throw the error to be handled by the Genkit flow
-        throw error;
+    } catch (e) {
+      // This would catch network errors or other unexpected issues with the request itself.
+      console.error('Error sending email via emailService:', e);
+      // Ensure we return an error object that matches the Resend error structure.
+      const err = e instanceof Error ? e : new Error('Unknown error in email service');
+      return { data: null, error: { name: 'ServiceError', message: err.message } };
     }
   },
 };
