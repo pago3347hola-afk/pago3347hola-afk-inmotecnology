@@ -40,28 +40,29 @@ const sendPaymentProofFlow = ai.defineFlow(
   },
   async (input) => {
     try {
-      // This logic sends a test email TO the user's specified Resend-registered email address.
+      // Using the user-provided test code to send an email.
       const { data } = await emailService.send({
         from: 'Acme <onboarding@resend.dev>',
-        to: ['pago3347hola@gmail.com'], // Sending to your Resend-registered email.
+        to: ['delivered@resend.dev'],
         subject: 'Hello World',
         html: '<strong>It works!</strong>',
       });
-
-      const successMessage = `¡Éxito! Correo de prueba enviado a pago3347hola@gmail.com. ID: ${data?.id}`;
-      console.log(successMessage);
+      
+      const successMessage = `Success! Test email sent. ID: ${data?.id}`;
+      console.log({ data });
 
       return {
         success: true,
         message: successMessage,
         emailId: data?.id,
       };
+
     } catch (error) {
       let errorMessage = 'An unknown error occurred.';
       if (error instanceof Error) {
            errorMessage = `Email sending error: ${error.message}`;
       }
-      console.error(errorMessage, error);
+      console.error({ error });
 
       return {
         success: false,
