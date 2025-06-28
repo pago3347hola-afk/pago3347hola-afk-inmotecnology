@@ -40,15 +40,16 @@ const sendPaymentProofFlow = ai.defineFlow(
   },
   async (input) => {
     try {
-      // Using the user-provided test code to send an email.
+      // Usando el código de prueba para confirmar la conexión con Resend.
+      // NOTA: 'onboarding@resend.dev' solo puede enviar a 'delivered@resend.dev' en el modo de prueba.
       const { data } = await emailService.send({
         from: 'Acme <onboarding@resend.dev>',
-        to: ['pago3347hola@gmail.com'],
-        subject: 'Hello World',
-        html: '<strong>It works!</strong>',
+        to: ['delivered@resend.dev'],
+        subject: 'Hola Mundo',
+        html: '<strong>¡Funciona!</strong>',
       });
       
-      const successMessage = `¡Éxito! Correo de prueba enviado. ID: ${data?.id}`;
+      const successMessage = `¡Éxito! Correo de prueba enviado a 'delivered@resend.dev'. ID: ${data?.id}. Esto confirma que tu clave de API de Resend es correcta.`;
       console.log({ data });
 
       return {

@@ -57,8 +57,8 @@ export default function RechargePage() {
 
       if (result.success) {
         toast({
-          title: "¡Prueba de Envío Exitosa!",
-          description: "Se envió un correo de prueba a pago3347hola@gmail.com. Revisa tu bandeja de entrada.",
+          title: "¡Conexión con Resend Exitosa!",
+          description: result.message,
           duration: 15000,
         });
 
