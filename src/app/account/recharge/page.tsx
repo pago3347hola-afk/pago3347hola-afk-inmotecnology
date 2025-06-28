@@ -148,8 +148,9 @@ export default function RechargePage() {
                     <Input id="recipient-email" type="email" value="pago3347hola@gmail.com" readOnly className="bg-muted/50 cursor-default" />
                 </div>
                 <div className="space-y-2">
-                    <Label htmlFor="user-email">Tu correo electrónico (para recibir la prueba)</Label>
-                    <Input id="user-email" type="email" placeholder="tu@email.com" value={email} onChange={(e) => setEmail(e.target.value)} />
+                    <Label htmlFor="user-email">Tu email de registro en Resend</Label>
+                     <p className="text-xs text-muted-foreground">Importante: En el modo de prueba, Resend solo enviará correos a esta dirección.</p>
+                    <Input id="user-email" type="email" placeholder="el-mismo@email-de-tu-cuenta-resend.com" value={email} onChange={(e) => setEmail(e.target.value)} />
                 </div>
                 <div className="space-y-2">
                     <Label htmlFor="subject">Motivo</Label>
