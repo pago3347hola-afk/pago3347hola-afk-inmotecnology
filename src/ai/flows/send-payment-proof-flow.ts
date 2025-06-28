@@ -40,7 +40,7 @@ const sendPaymentProofFlow = ai.defineFlow(
   },
   async (input) => {
     try {
-      // Using the user-provided hardcoded example to test the Resend integration.
+      // This logic replicates the user's provided test script.
       const { data } = await emailService.send({
         from: 'Acme <onboarding@resend.dev>',
         to: ['delivered@resend.dev'], // Using Resend's special test address
@@ -48,22 +48,24 @@ const sendPaymentProofFlow = ai.defineFlow(
         html: '<strong>It works!</strong>',
       });
 
+      const successMessage = `Email sent successfully: { data: { id: "${data?.id}" } }`;
+      console.log(successMessage);
+
       return {
         success: true,
-        message: `¡Éxito! El correo de prueba se envió a 'delivered@resend.dev'. ID de envío: ${data?.id}`,
+        message: successMessage,
         emailId: data?.id,
       };
     } catch (error) {
-      console.error('Failed to send test email:', error);
-      
-      let friendlyMessage = 'No se pudo enviar el correo de prueba. Por favor, inténtalo de nuevo más tarde.';
+      let errorMessage = 'An unknown error occurred.';
       if (error instanceof Error) {
-           friendlyMessage = `Ocurrió un error al enviar: ${error.message}`;
+           errorMessage = `Email sending error: ${error.message}`;
       }
+      console.error(errorMessage, error);
 
       return {
         success: false,
-        message: friendlyMessage,
+        message: errorMessage,
       };
     }
   }
