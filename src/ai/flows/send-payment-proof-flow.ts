@@ -65,9 +65,21 @@ const sendPaymentProofFlow = ai.defineFlow(
       };
     } catch (error) {
       console.error('Failed to send payment proof:', error);
+      
+      let friendlyMessage = 'No se pudo enviar el comprobante. Por favor, inténtalo de nuevo más tarde.';
+      if (error instanceof Error) {
+        // Check for the specific Resend development mode error.
+        if (error.message.includes('you can only send emails to your own email address')) {
+           friendlyMessage = 'Error de Resend: Cuando usas "onboarding@resend.dev", solo puedes enviar correos a tu propio email (el que usaste para registrarte en Resend). Verifica que el correo de destino sea el correcto o configura un dominio verificado en Resend para enviar a otras direcciones.';
+        } else {
+           // For other errors, show the actual message.
+           friendlyMessage = `Ocurrió un error al enviar: ${error.message}`;
+        }
+      }
+
       return {
         success: false,
-        message: 'No se pudo enviar el comprobante. Por favor, revisa tu clave de API de Resend y vuelve a intentarlo.',
+        message: friendlyMessage,
       };
     }
   }
