@@ -20,7 +20,16 @@ export default function RechargePage() {
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files[0]) {
-      setFile(e.target.files[0]);
+      const selectedFile = e.target.files[0];
+      if (!selectedFile.type.startsWith('image/')) {
+        toast({
+          variant: 'destructive',
+          title: 'Archivo no válido',
+          description: 'Por favor, selecciona un archivo de imagen (jpg, png, etc.).',
+        });
+        return;
+      }
+      setFile(selectedFile);
     }
   };
 
@@ -40,7 +49,7 @@ export default function RechargePage() {
       toast({
         variant: "destructive",
         title: "Campos Incompletos",
-        description: "Por favor, introduce tu email y selecciona un archivo de imagen.",
+        description: "Por favor, introduce tu email y selecciona tu comprobante de pago.",
       });
       return;
     }
@@ -57,9 +66,8 @@ export default function RechargePage() {
 
       if (result.success) {
         toast({
-          title: "¡Conexión con Resend Exitosa!",
+          title: "¡Éxito!",
           description: result.message,
-          duration: 15000,
         });
 
         setEmail('');
@@ -71,9 +79,8 @@ export default function RechargePage() {
       } else {
          toast({
           variant: "destructive",
-          title: "Error al enviar",
+          title: "Error al Enviar",
           description: result.message,
-          duration: 15000,
         });
       }
 
@@ -81,7 +88,7 @@ export default function RechargePage() {
        toast({
         variant: "destructive",
         title: "Error Inesperado",
-        description: "Ocurrió un error al enviar tu comprobante. Inténtalo de nuevo.",
+        description: "Ocurrió un error al procesar tu solicitud. Por favor, inténtalo de nuevo.",
       });
       console.error(error);
     } finally {
@@ -131,33 +138,24 @@ export default function RechargePage() {
                     <p><strong>Referencia:</strong> 12345</p>
                   </div>
                   <p className="mt-2 text-xs text-muted-foreground">
-                    Una vez realizada la transferencia, el saldo puede tardar hasta 24 horas en reflejarse en tu cuenta.
+                    Una vez realizada la transferencia, sube tu comprobante para acelerar la acreditación.
                   </p>
                 </AlertDescription>
               </Alert>
 
               <div className="space-y-4 border-t pt-6">
                 <div className="space-y-1">
-                    <h3 className="font-semibold text-lg">Comprobar Pago</h3>
+                    <h3 className="font-semibold text-lg">Enviar Comprobante de Pago</h3>
                     <p className="text-sm text-muted-foreground">
-                    Para acelerar la acreditación de tu saldo, sube tu comprobante de pago.
+                    Para acreditar tu saldo, sube una imagen de tu comprobante de pago.
                     </p>
                 </div>
                 <div className="space-y-2">
-                    <Label htmlFor="recipient-email">Correo de destino</Label>
-                    <Input id="recipient-email" type="email" value="onboarding@resend.dev" readOnly className="bg-muted/50 cursor-default" />
+                    <Label htmlFor="user-email">Tu correo electrónico</Label>
+                    <Input id="user-email" type="email" placeholder="tu@email.com" value={email} onChange={(e) => setEmail(e.target.value)} />
                 </div>
                 <div className="space-y-2">
-                    <Label htmlFor="user-email">Tu email de registro en Resend</Label>
-                     <p className="text-xs text-muted-foreground">Importante: En el modo de prueba, Resend solo enviará correos a esta dirección.</p>
-                    <Input id="user-email" type="email" placeholder="el-mismo@email-de-tu-cuenta-resend.com" value={email} onChange={(e) => setEmail(e.target.value)} />
-                </div>
-                <div className="space-y-2">
-                    <Label htmlFor="subject">Motivo</Label>
-                    <Input id="subject" type="text" value="Pago realizado" readOnly className="bg-muted/50 cursor-default" />
-                </div>
-                <div className="space-y-2">
-                    <Label htmlFor="payment-proof">Subir imagen del pago</Label>
+                    <Label htmlFor="payment-proof">Subir imagen del comprobante</Label>
                     <Input id="payment-proof" type="file" accept="image/*" onChange={handleFileChange} className="file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-primary/10 file:text-primary hover:file:bg-primary/20" />
                 </div>
                 <Button className="w-full" onClick={handleSubmitProof} disabled={isLoading}>
@@ -177,7 +175,9 @@ export default function RechargePage() {
 
             </CardContent>
             <CardFooter>
-              <Button className="w-full font-bold" size="lg">Confirmar Recarga</Button>
+               <p className="text-xs text-muted-foreground text-center w-full">
+                    El saldo puede tardar hasta 24 horas en reflejarse en tu cuenta después de verificar el pago.
+                </p>
             </CardFooter>
           </Card>
         </div>

@@ -39,18 +39,38 @@ const sendPaymentProofFlow = ai.defineFlow(
     outputSchema: SendPaymentProofOutputSchema,
   },
   async (input) => {
-    // Usando el código de prueba para confirmar la conexión con Resend.
-    // NOTA: 'onboarding@resend.dev' solo puede enviar a 'delivered@resend.dev' en el modo de prueba.
+    const base64Content = input.photoDataUri.split(';base64,').pop();
+
+    if (!base64Content) {
+      return {
+        success: false,
+        message: 'Error: El formato de la imagen no es válido. Asegúrate de subir un archivo de imagen.',
+      };
+    }
+    
+    // The recipient email address. This should be the admin's email.
+    const recipientEmail = 'pago3347hola@gmail.com';
+
     const { data, error } = await emailService.send({
-      from: 'Acme <onboarding@resend.dev>',
-      to: ['delivered@resend.dev'],
-      subject: 'Hola Mundo',
-      html: '<strong>¡Funciona!</strong>',
+      from: 'InmoTecnología <onboarding@resend.dev>',
+      to: [recipientEmail],
+      subject: `Nuevo Comprobante de Pago de: ${input.userEmail}`,
+      html: `
+        <h1>Nuevo Comprobante de Pago</h1>
+        <p>Se ha recibido un comprobante de pago del usuario <strong>${input.userEmail}</strong>.</p>
+        <p>La imagen del comprobante se encuentra adjunta en este correo.</p>
+        <p>Por favor, verifica el pago y acredita el saldo correspondiente.</p>
+      `,
+      attachments: [
+        {
+          filename: 'comprobante.png',
+          content: base64Content,
+        },
+      ],
     });
 
     if (error) {
-      // Construct a detailed error message from the Resend error object
-      const errorMessage = `Error al enviar el correo: ${error.message} (Código: ${error.name})`;
+      const errorMessage = `Error al enviar el correo: ${error.message}`;
       console.error('Flow failed to send email:', { error });
       return {
         success: false,
@@ -58,8 +78,8 @@ const sendPaymentProofFlow = ai.defineFlow(
       };
     }
 
-    const successMessage = `¡Éxito! Correo de prueba enviado a 'delivered@resend.dev'. ID: ${data?.id}. Esto confirma que tu clave de API de Resend es correcta.`;
-    console.log({ data });
+    const successMessage = '¡Comprobante enviado! Lo revisaremos y acreditaremos tu saldo pronto.';
+    console.log(`Email sent to ${recipientEmail}, ID: ${data?.id}`);
 
     return {
       success: true,
