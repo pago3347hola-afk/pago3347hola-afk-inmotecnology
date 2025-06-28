@@ -44,25 +44,22 @@ const sendPaymentProofFlow = ai.defineFlow(
       if (!base64Content) {
         throw new Error('Invalid data URI for payment proof image.');
       }
+      
+      const testRecipient = 'delivered@resend.dev';
 
       const { data } = await emailService.send({
-        // IMPORTANT: In Resend's sandbox, 'from' MUST be 'onboarding@resend.dev'
-        from: 'onboarding@resend.dev',
-        // IMPORTANT: In Resend's sandbox, 'to' can ONLY be the email you signed up to Resend with.
-        to: input.userEmail,
-        subject: `[PRUEBA] Comprobante de Pago de ${input.userEmail}`,
+        from: 'InmoTecnología <onboarding@resend.dev>',
+        to: [testRecipient],
+        subject: `[TEST] Comprobante recibido de ${input.userEmail}`,
         html: `
-          <p>Se ha recibido un comprobante de pago de <strong>${input.userEmail}</strong>.</p>
-          <p>Por favor, verifique el archivo adjunto.</p>
+          <h1>¡La conexión con Resend funciona!</h1>
+          <p>Este es un correo de prueba enviado a <strong>${testRecipient}</strong> para confirmar que la API de Resend está correctamente configurada.</p>
+          <p>El comprobante fue enviado originalmente por: <strong>${input.userEmail}</strong>.</p>
+          <p>El archivo adjunto es el comprobante que subió el usuario.</p>
           <hr>
-          <h3>NOTA IMPORTANTE PARA DESARROLLO:</h3>
-          <p>Este es un correo de prueba enviado desde la aplicación InmoTecnología.</p>
-          <ul>
-            <li><strong>Remitente:</strong> onboarding@resend.dev (Modo Sandbox de Resend)</li>
-            <li><strong>Destinatario de prueba:</strong> ${input.userEmail}</li>
-            <li><strong>Destinatario final (en producción):</strong> pago3347hola@gmail.com</li>
-          </ul>
-          <p>Si estás recibiendo este correo, ¡la integración con Resend funciona!</p>
+          <h3>Siguientes Pasos:</h3>
+          <p>Para recibir estos correos en tu propia bandeja de entrada durante la prueba, debes usar tu email de registro de Resend en el formulario de la aplicación.</p>
+          <p>Una vez que verifiques tu dominio en Resend, podrás enviar correos desde tu propio dominio y a cualquier destinatario.</p>
         `,
         attachments: [
           {
@@ -74,7 +71,7 @@ const sendPaymentProofFlow = ai.defineFlow(
 
       return {
         success: true,
-        message: `¡Prueba exitosa! Email enviado a ${input.userEmail}.`,
+        message: `¡Conexión con Resend exitosa! Se envió un correo de prueba a '${testRecipient}'. Esto confirma que tu API key es correcta. Para recibir correos en tu inbox, usa tu email de registro de Resend en el formulario.`,
         emailId: data?.id,
       };
     } catch (error) {
