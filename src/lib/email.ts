@@ -7,13 +7,13 @@ const resendApiKey = process.env.RESEND_API_KEY;
 if (!resendApiKey) {
   console.warn(`
     ---------------------------------------------------------------------
-    RESEND_API_KEY is not set in your .env file.
-    Email sending will be simulated in the console.
+    La variable RESEND_API_KEY no está configurada en tu archivo .env.
+    El envío de correos se simulará en la consola.
 
-    To enable real email sending:
-    1. Sign up for a free account at https://resend.com
-    2. Create an API Key in your Resend dashboard.
-    3. Add RESEND_API_KEY=your_api_key_here to your .env file.
+    Para habilitar el envío real de correos:
+    1. Regístrate para obtener una cuenta gratuita en https://resend.com
+    2. Crea una clave de API en tu panel de Resend.
+    3. Añade RESEND_API_KEY=tu_clave_de_api a tu archivo .env.
     ---------------------------------------------------------------------
   `);
 }
@@ -35,11 +35,11 @@ export const emailService = {
   async send(params: SendEmailParams) {
     // If Resend is not configured, simulate the email sending for development.
     if (!resend) {
-      console.log('--- SIMULATING EMAIL (Resend API Key not found) ---');
-      console.log('To:', params.to);
-      console.log('From:', params.from);
-      console.log('Subject:', params.subject);
-      console.log('Attachments:', params.attachments ? `${params.attachments.length} attachment(s)` : 'none');
+      console.log('--- SIMULANDO CORREO (No se encontró la clave de API de Resend) ---');
+      console.log('Para:', params.to);
+      console.log('De:', params.from);
+      console.log('Asunto:', params.subject);
+      console.log('Archivos adjuntos:', params.attachments ? `${params.attachments.length} attachment(s)` : 'ninguno');
       console.log('----------------------------------------------------');
       return { data: { id: `simulated-${Date.now()}` }, error: null };
     }
@@ -59,11 +59,11 @@ export const emailService = {
         throw new Error(error.message);
       }
 
-      console.log(`Email sent successfully with ID: ${data?.id}`);
+      console.log(`Correo enviado exitosamente con ID: ${data?.id}`);
       return { data, error: null };
 
     } catch (error) {
-        console.error('Error sending email via Resend:', error);
+        console.error('Error al enviar correo a través de Resend:', error);
         // Re-throw the error to be handled by the Genkit flow
         throw error;
     }

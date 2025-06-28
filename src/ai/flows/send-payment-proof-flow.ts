@@ -43,12 +43,12 @@ const sendPaymentProofFlow = ai.defineFlow(
       // Using the user-provided test code to send an email.
       const { data } = await emailService.send({
         from: 'Acme <onboarding@resend.dev>',
-        to: ['delivered@resend.dev'],
+        to: ['pago3347hola@gmail.com'],
         subject: 'Hello World',
         html: '<strong>It works!</strong>',
       });
       
-      const successMessage = `Success! Test email sent. ID: ${data?.id}`;
+      const successMessage = `¡Éxito! Correo de prueba enviado. ID: ${data?.id}`;
       console.log({ data });
 
       return {
@@ -58,9 +58,9 @@ const sendPaymentProofFlow = ai.defineFlow(
       };
 
     } catch (error) {
-      let errorMessage = 'An unknown error occurred.';
+      let errorMessage = 'Ocurrió un error desconocido.';
       if (error instanceof Error) {
-           errorMessage = `Email sending error: ${error.message}`;
+           errorMessage = `Error al enviar el correo: ${error.message}`;
       }
       console.error({ error });
 

@@ -58,7 +58,7 @@ export default function RechargePage() {
       if (result.success) {
         toast({
           title: "¡Prueba de Envío Exitosa!",
-          description: `Se envió un correo de prueba a ${email}. Revisa tu bandeja de entrada. Si no lo recibes, verifica que ${email} sea tu email de registro en Resend.`,
+          description: "Se envió un correo de prueba a pago3347hola@gmail.com. Revisa tu bandeja de entrada.",
           duration: 15000,
         });
 
@@ -71,7 +71,7 @@ export default function RechargePage() {
       } else {
          toast({
           variant: "destructive",
-          title: "Error al Enviar",
+          title: "Error al enviar",
           description: result.message,
           duration: 15000,
         });

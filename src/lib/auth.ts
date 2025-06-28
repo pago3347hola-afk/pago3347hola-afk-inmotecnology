@@ -12,7 +12,7 @@ export async function signInWithGoogle() {
     window.location.href = '/account';
   } catch (error: any)
   {
-    console.error("Firebase Auth Error:", error);
+    console.error("Error de autenticación de Firebase:", error);
 
     let title = "Error de inicio de sesión";
     let description = "Ocurrió un error inesperado. Por favor, inténtalo de nuevo.";

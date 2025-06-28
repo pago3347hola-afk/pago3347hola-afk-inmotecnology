@@ -37,7 +37,7 @@ export default function HomePage() {
           </p>
           <div className="mt-8 flex justify-center">
             <Button asChild size="lg" className="font-bold">
-              <Link href="/properties">EMPIEZA A INVERTIR <ArrowRight className="ml-2 h-5 w-5" /></Link>
+              <Link href="/properties">EMPEZAR A INVERTIR <ArrowRight className="ml-2 h-5 w-5" /></Link>
             </Button>
           </div>
         </div>
@@ -61,7 +61,7 @@ export default function HomePage() {
                 <p className="text-muted-foreground mt-2">{service.description}</p>
                  <Button asChild variant="link" className="mt-4 text-primary">
                   <Link href={service.link}>
-                    {service.title === 'Gestionar Cuenta' ? 'demo' : 'Haz click aquí'}
+                    {service.title === 'Gestionar Cuenta' ? 'Ver demo' : 'Saber más'}
                     <ArrowRight className="ml-2 h-4 w-4" />
                   </Link>
                 </Button>
