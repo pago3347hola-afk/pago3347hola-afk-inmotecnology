@@ -1,10 +1,15 @@
+'use client';
+
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
-import { Send } from "lucide-react";
+import { Send, Loader2 } from "lucide-react";
+import { useToast } from "@/hooks/use-toast";
+import { sendSupportMessage } from "@/ai/flows/send-support-message-flow";
 
 const faqs = [
   {
@@ -58,6 +63,56 @@ Tu dinero trabaja en proyectos reales, bien seleccionados y con total transparen
 ]
 
 export default function SupportPage() {
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+  const [subject, setSubject] = useState('');
+  const [message, setMessage] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
+  const { toast } = useToast();
+
+  const handleSubmit = async () => {
+    if (!name || !email || !subject || !message) {
+      toast({
+        variant: 'destructive',
+        title: 'Campos Incompletos',
+        description: 'Por favor, rellena todos los campos del formulario.',
+      });
+      return;
+    }
+
+    setIsLoading(true);
+
+    try {
+      const result = await sendSupportMessage({ name, email, subject, message });
+      if (result.success) {
+        toast({
+          title: '¡Mensaje Enviado!',
+          description: result.message,
+        });
+        // Clear form
+        setName('');
+        setEmail('');
+        setSubject('');
+        setMessage('');
+      } else {
+        toast({
+          variant: 'destructive',
+          title: 'Error al Enviar',
+          description: result.message,
+        });
+      }
+    } catch (error) {
+      toast({
+        variant: 'destructive',
+        title: 'Error Inesperado',
+        description: 'Ocurrió un error al procesar tu solicitud. Por favor, inténtalo de nuevo.',
+      });
+      console.error(error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   return (
     <div className="container mx-auto px-4 md:px-6 py-12">
       <div className="text-center mb-12">
@@ -90,23 +145,33 @@ export default function SupportPage() {
               <div className="grid grid-cols-2 gap-4">
                 <div className="space-y-2">
                   <Label htmlFor="name">Nombre</Label>
-                  <Input id="name" placeholder="Tu nombre" />
+                  <Input id="name" placeholder="Tu nombre" value={name} onChange={(e) => setName(e.target.value)} />
                 </div>
                 <div className="space-y-2">
                   <Label htmlFor="email">Email</Label>
-                  <Input id="email" type="email" placeholder="tu@email.com" />
+                  <Input id="email" type="email" placeholder="tu@email.com" value={email} onChange={(e) => setEmail(e.target.value)} />
                 </div>
               </div>
               <div className="space-y-2">
                 <Label htmlFor="subject">Asunto</Label>
-                <Input id="subject" placeholder="Asunto de tu consulta" />
+                <Input id="subject" placeholder="Asunto de tu consulta" value={subject} onChange={(e) => setSubject(e.target.value)} />
               </div>
               <div className="space-y-2">
                 <Label htmlFor="message">Mensaje</Label>
-                <Textarea id="message" placeholder="Describe tu consulta aquí..." rows={5} />
+                <Textarea id="message" placeholder="Describe tu consulta aquí..." rows={5} value={message} onChange={(e) => setMessage(e.target.value)} />
               </div>
-              <Button className="w-full font-bold">
-                <Send className="mr-2 h-4 w-4" /> Enviar Mensaje
+              <Button className="w-full font-bold" onClick={handleSubmit} disabled={isLoading}>
+                {isLoading ? (
+                  <>
+                    <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                    Enviando...
+                  </>
+                ) : (
+                  <>
+                    <Send className="mr-2 h-4 w-4" /> 
+                    Enviar Mensaje
+                  </>
+                )}
               </Button>
             </CardContent>
           </Card>
