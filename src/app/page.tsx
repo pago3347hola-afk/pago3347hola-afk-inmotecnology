@@ -51,9 +51,8 @@ export default function HomePage() {
         <div className="container mx-auto px-4 md:px-6">
           <div className="text-center">
             <h2 className="font-headline text-3xl md:text-4xl font-bold">Propiedad Destacada</h2>
-            <p className="mt-4 text-lg text-muted-foreground">Una oportunidad de inversión única que no querrás dejar pasar.</p>
           </div>
-          <div className="mt-12 max-w-2xl mx-auto">
+          <div className="mt-8 max-w-2xl mx-auto">
              <Card className="relative overflow-hidden rounded-xl border shadow-lg group">
                 <Badge className="absolute top-4 right-4 z-10">Propiedad Destacada</Badge>
                 <CardHeader className="p-0">
