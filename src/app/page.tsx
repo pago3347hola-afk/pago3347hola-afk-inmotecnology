@@ -48,14 +48,14 @@ export default function HomePage() {
         </div>
       </section>
 
-      <section className="py-16 md:py-24 bg-background">
+      <section className="pt-8 pb-16 md:pt-12 md:pb-24 bg-background">
         <div className="container mx-auto px-4 md:px-6">
           <div className="text-center mb-12">
             <h2 className="font-headline text-3xl md:text-4xl font-bold">Propiedad Destacada</h2>
           </div>
           <div className="mt-8 max-w-2xl mx-auto">
-             <Card className="relative rounded-xl border shadow-lg group">
-                <Badge className="absolute top-0 right-6 z-10 -translate-y-1/2">Propiedad Destacada</Badge>
+             <Card className="overflow-hidden relative rounded-xl border shadow-lg group">
+                <Badge className="absolute top-4 right-4 z-10">Propiedad Destacada</Badge>
                 <CardHeader className="p-0">
                   <Image
                     src="https://http2.mlstatic.com/D_NQ_NP_2X_815107-MLM81432530034_122024-F-residencia-en-venta-en-lomas-de-juriquilla-diseno-de-autor-materiales-premium.webp"
