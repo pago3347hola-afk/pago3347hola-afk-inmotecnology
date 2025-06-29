@@ -4,6 +4,12 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 import { ArrowRight, BatteryCharging, Banknote } from "lucide-react";
 
 export default function AccountPage() {
+  const currentBalance = 15230.50;
+  const formattedBalance = new Intl.NumberFormat('es-MX', {
+    style: 'currency',
+    currency: 'MXN',
+  }).format(currentBalance);
+
   return (
     <div className="container mx-auto px-4 md:px-6 py-12">
       <div className="mb-12">
@@ -18,7 +24,7 @@ export default function AccountPage() {
             <CardDescription>Tu balance disponible en la plataforma.</CardDescription>
           </CardHeader>
           <CardContent>
-            <p className="text-4xl font-bold text-primary">15,230.50 €</p>
+            <p className="text-4xl font-bold text-primary">{formattedBalance}</p>
           </CardContent>
         </Card>
 
