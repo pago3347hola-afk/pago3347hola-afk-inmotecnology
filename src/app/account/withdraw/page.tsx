@@ -1,17 +1,81 @@
+'use client';
+
 import Link from "next/link";
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
-import { ArrowLeft, Info, Banknote } from "lucide-react";
+import { ArrowLeft, Info, Banknote, Mail, Loader2 } from "lucide-react";
+import { useToast } from "@/hooks/use-toast";
+import { requestWithdrawal } from "@/ai/flows/request-withdrawal-flow";
 
 export default function WithdrawPage() {
-  const currentBalance = 15230.50;
+  const [balance, setBalance] = useState(15230.50);
+  const [amount, setAmount] = useState('');
+  const [beneficiaryName, setBeneficiaryName] = useState('');
+  const [clabe, setClabe] = useState('');
+  const [cardNumber, setCardNumber] = useState('');
+  const [userEmail, setUserEmail] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
+  const { toast } = useToast();
+
   const formattedBalance = new Intl.NumberFormat('es-MX', {
     style: 'currency',
     currency: 'MXN',
-  }).format(currentBalance);
+  }).format(balance);
+
+  const handleSubmit = async () => {
+    const withdrawalAmount = parseFloat(amount);
+
+    if (isNaN(withdrawalAmount) || withdrawalAmount <= 0) {
+        toast({ variant: "destructive", title: "Monto inválido", description: "Por favor, introduce una cantidad válida para retirar." });
+        return;
+    }
+    if (withdrawalAmount > balance) {
+        toast({ variant: "destructive", title: "Saldo insuficiente", description: "No puedes retirar más de tu saldo actual." });
+        return;
+    }
+    if (!beneficiaryName || (!clabe && !cardNumber) || !userEmail) {
+        toast({ variant: "destructive", title: "Campos incompletos", description: "Por favor, completa todos los campos requeridos." });
+        return;
+    }
+    if (clabe && clabe.length !== 18) {
+      toast({ variant: "destructive", title: "CLABE inválida", description: "La CLABE debe tener 18 dígitos." });
+      return;
+    }
+
+
+    setIsLoading(true);
+    try {
+        const result = await requestWithdrawal({
+            amount: withdrawalAmount,
+            beneficiaryName,
+            clabe,
+            cardNumber,
+            userEmail,
+        });
+
+        if (result.success) {
+            setBalance((prev) => prev - withdrawalAmount);
+            toast({ title: "¡Solicitud Enviada!", description: result.message });
+            // Reset form
+            setAmount('');
+            setBeneficiaryName('');
+            setClabe('');
+            setCardNumber('');
+            setUserEmail('');
+        } else {
+            toast({ variant: "destructive", title: "Error en la Solicitud", description: result.message });
+        }
+    } catch (error) {
+        toast({ variant: "destructive", title: "Error Inesperado", description: "Ocurrió un error al procesar tu solicitud." });
+        console.error(error);
+    } finally {
+        setIsLoading(false);
+    }
+  };
 
 
   return (
@@ -38,22 +102,39 @@ export default function WithdrawPage() {
               </Alert>
               <div className="space-y-2">
                 <Label htmlFor="withdraw-amount">Cantidad a Retirar (MXN)</Label>
-                <Input id="withdraw-amount" type="number" placeholder="Ej: 1000" />
+                <Input id="withdraw-amount" type="number" placeholder="Ej: 1000" value={amount} onChange={(e) => setAmount(e.target.value)} />
               </div>
               <div className="space-y-4 border p-4 rounded-md">
                  <h4 className="font-semibold flex items-center"><Banknote className="mr-2 h-5 w-5 text-muted-foreground"/> Detalles Bancarios</h4>
                  <div className="space-y-2">
                     <Label htmlFor="beneficiary-name">Nombre del Beneficiario</Label>
-                    <Input id="beneficiary-name" placeholder="Nombre completo tal como aparece en la cuenta" />
+                    <Input id="beneficiary-name" placeholder="Nombre completo tal como aparece en la cuenta" value={beneficiaryName} onChange={(e) => setBeneficiaryName(e.target.value)} />
                  </div>
                  <div className="space-y-2">
-                    <Label htmlFor="clabe">CLABE Interbancaria</Label>
-                    <Input id="clabe" placeholder="18 dígitos" maxLength={18} />
+                    <Label htmlFor="clabe">CLABE Interbancaria (18 dígitos)</Label>
+                    <Input id="clabe" placeholder="Opcional si proporcionas tarjeta" value={clabe} onChange={(e) => setClabe(e.target.value)} maxLength={18} />
+                 </div>
+                  <div className="space-y-2">
+                    <Label htmlFor="card-number">Número de Tarjeta (16 dígitos)</Label>
+                    <Input id="card-number" placeholder="Opcional si proporcionas CLABE" value={cardNumber} onChange={(e) => setCardNumber(e.target.value)} maxLength={16} />
+                 </div>
+                 <div className="space-y-2">
+                    <Label htmlFor="user-email">Correo Electrónico del Cliente</Label>
+                    <Input id="user-email" type="email" placeholder="Para notificar al cliente" value={userEmail} onChange={(e) => setUserEmail(e.target.value)} />
                  </div>
               </div>
             </CardContent>
             <CardFooter>
-              <Button className="w-full font-bold" size="lg">Solicitar Retiro</Button>
+              <Button className="w-full font-bold" size="lg" onClick={handleSubmit} disabled={isLoading}>
+                {isLoading ? (
+                    <>
+                      <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                      Procesando...
+                    </>
+                  ) : (
+                    "Solicitar Retiro"
+                  )}
+              </Button>
             </CardFooter>
           </Card>
         </div>
