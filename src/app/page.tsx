@@ -54,7 +54,7 @@ export default function HomePage() {
             <h2 className="font-headline text-3xl md:text-4xl font-bold">Propiedad Destacada</h2>
           </div>
           <div className="mt-8 max-w-2xl mx-auto">
-             <Card className="relative rounded-xl border shadow-lg group pt-6">
+             <Card className="relative rounded-xl border shadow-lg group">
                 <Badge className="absolute top-0 right-6 z-10 -translate-y-1/2">Propiedad Destacada</Badge>
                 <CardHeader className="p-0">
                   <Image
