@@ -171,7 +171,6 @@ export default function WithdrawPage() {
                     <Label htmlFor="card-number">Número de Tarjeta (16 dígitos)</Label>
                     <Input id="card-number" placeholder="Opcional si proporcionas CLABE" value={cardNumber} onChange={(e) => setCardNumber(e.target.value)} maxLength={16} />
                  </div>
-                 <p className="text-sm text-muted-foreground">Se enviará una notificación al correo: <span className="font-medium text-foreground">{userData.email}</span></p>
               </div>
             </CardContent>
             <CardFooter>
