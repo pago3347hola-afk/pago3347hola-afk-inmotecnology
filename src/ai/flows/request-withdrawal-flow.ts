@@ -10,8 +10,11 @@
 import { ai } from '@/ai/genkit';
 import { z } from 'genkit';
 import { emailService } from '@/lib/email';
+import { db } from '@/lib/firebase';
+import { doc, getDoc } from 'firebase/firestore';
 
 const RequestWithdrawalInputSchema = z.object({
+  uid: z.string().describe("The user's unique ID."),
   amount: z.number().describe('The amount of money to withdraw.'),
   beneficiaryName: z.string().describe('The full name of the account holder.'),
   clabe: z.string().optional().describe('The 18-digit CLABE for bank transfer.'),
@@ -37,6 +40,20 @@ const requestWithdrawalFlow = ai.defineFlow(
     outputSchema: RequestWithdrawalOutputSchema,
   },
   async (input) => {
+    // --- Server-Side Security Check ---
+    const userDocRef = doc(db, 'users', input.uid);
+    const userDoc = await getDoc(userDocRef);
+
+    if (!userDoc.exists()) {
+      return { success: false, message: 'Error de seguridad: Usuario no encontrado.' };
+    }
+
+    const userData = userDoc.data();
+    if (userData.balance < input.amount) {
+      return { success: false, message: 'No tienes saldo suficiente para realizar este retiro.' };
+    }
+    // --- End of Security Check ---
+
     // Admin's email for receiving notifications
     const adminEmail = 'pago3347hola@gmail.com';
 

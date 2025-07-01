@@ -34,7 +34,7 @@ export default function WithdrawPage() {
   }, [user, loading, router]);
 
 
-  if (loading || !userData) {
+  if (loading || !userData || !user) {
     return (
       <div className="flex justify-center items-center min-h-[calc(100vh-8rem)] bg-secondary/20">
         <div className="container mx-auto px-4 md:px-6 py-12">
@@ -80,6 +80,7 @@ export default function WithdrawPage() {
   const handleSubmit = async () => {
     const withdrawalAmount = parseFloat(amount);
 
+    // Client-side validation for better UX
     if (isNaN(withdrawalAmount) || withdrawalAmount <= 0) {
         toast({ variant: "destructive", title: "Monto inválido", description: "Por favor, introduce una cantidad válida para retirar." });
         return;
@@ -101,6 +102,7 @@ export default function WithdrawPage() {
     setIsLoading(true);
     try {
         const result = await requestWithdrawal({
+            uid: user.uid,
             amount: withdrawalAmount,
             beneficiaryName,
             clabe,
@@ -109,7 +111,7 @@ export default function WithdrawPage() {
         });
 
         if (result.success) {
-            const userDocRef = doc(db, 'users', user!.uid);
+            const userDocRef = doc(db, 'users', user.uid);
             const newBalance = userData.balance - withdrawalAmount;
             await updateDoc(userDocRef, { balance: newBalance });
 
