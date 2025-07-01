@@ -1,14 +1,40 @@
 'use client';
 
-import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
-import { auth } from "./firebase";
+import { GoogleAuthProvider, signInWithPopup, User } from "firebase/auth";
+import { doc, setDoc, getDoc } from "firebase/firestore";
+import { auth, db } from "./firebase";
 import { toast } from "@/hooks/use-toast";
+
+// Function to create a user profile in Firestore if it doesn't exist
+async function createUserProfile(user: User) {
+  const userRef = doc(db, "users", user.uid);
+  const userDoc = await getDoc(userRef);
+
+  if (!userDoc.exists()) {
+    // User is new, create a document for them
+    await setDoc(userRef, {
+      uid: user.uid,
+      email: user.email,
+      displayName: user.displayName,
+      createdAt: new Date(),
+      balance: 0, // Set initial balance to 0
+    });
+    console.log("Nuevo perfil de usuario creado en Firestore.");
+  } else {
+    console.log("El usuario ya existe en Firestore.");
+  }
+}
 
 export async function signInWithGoogle() {
   const provider = new GoogleAuthProvider();
 
   try {
-    await signInWithPopup(auth, provider);
+    const result = await signInWithPopup(auth, provider);
+    const user = result.user;
+    
+    // Create user profile in Firestore after successful sign-in
+    await createUserProfile(user);
+
     window.location.href = '/account';
   } catch (error: any)
   {
