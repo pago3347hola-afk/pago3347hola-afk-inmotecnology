@@ -1,6 +1,6 @@
 'use client';
 
-import { GoogleAuthProvider, signInWithPopup, User, signOut } from "firebase/auth";
+import { GoogleAuthProvider, signInWithPopup, User, signOut, createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
 import { doc, setDoc, getDoc } from "firebase/firestore";
 import { auth, db } from "./firebase";
 import { toast } from "@/hooks/use-toast";
@@ -22,6 +22,59 @@ async function createUserProfile(user: User) {
     console.log("Nuevo perfil de usuario creado en Firestore.");
   } else {
     console.log("El usuario ya existe en Firestore.");
+  }
+}
+
+export async function signUpWithEmailAndPassword(email: string, password: string, displayName: string) {
+  try {
+    const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+    const user = userCredential.user;
+    
+    // Update Firebase Auth profile
+    await updateProfile(user, { displayName: displayName });
+
+    // The user object from createUserWithEmailAndPassword doesn't immediately have the displayName.
+    // We need to pass it to our createUserProfile function manually to ensure it's written to Firestore.
+    // Let's create a temporary user object with all the required info.
+    const userWithProfile = {
+      ...user,
+      displayName: displayName,
+    };
+    
+    await createUserProfile(userWithProfile);
+
+    window.location.href = '/account';
+  } catch (error: any) {
+    console.error("Error de registro de Firebase:", error);
+    let title = "Error de Registro";
+    let description = "Ocurrió un error inesperado. Por favor, inténtalo de nuevo.";
+
+    switch(error.code) {
+        case 'auth/email-already-in-use':
+            title = "Correo ya registrado";
+            description = "El correo electrónico que ingresaste ya está en uso. Por favor, inicia sesión o usa un correo diferente.";
+            break;
+        case 'auth/weak-password':
+            title = "Contraseña débil";
+            description = "La contraseña debe tener al menos 6 caracteres.";
+            break;
+        case 'auth/invalid-email':
+            title = "Correo inválido";
+            description = "El formato del correo electrónico no es válido.";
+            break;
+        default:
+            title = `Error Inesperado: ${error.code}`;
+            description = "Ocurrió un error no identificado. Revisa la consola para más detalles.";
+            break;
+    }
+
+    toast({
+        variant: "destructive",
+        title: title,
+        description: description,
+    });
+    // Re-throw the error so the component can handle its loading state
+    throw error;
   }
 }
 

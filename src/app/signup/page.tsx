@@ -1,7 +1,7 @@
 'use client';
 
 import Link from "next/link";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { useAuth } from "@/context/AuthContext";
 import { Button } from "@/components/ui/button";
@@ -9,9 +9,10 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Checkbox } from "@/components/ui/checkbox";
-import { UserPlus } from "lucide-react";
+import { UserPlus, Loader2 } from "lucide-react";
 import { Logo } from "@/components/logo";
-import { signInWithGoogle } from "@/lib/auth";
+import { signInWithGoogle, signUpWithEmailAndPassword } from "@/lib/auth";
+import { useToast } from "@/hooks/use-toast";
 import { Skeleton } from "@/components/ui/skeleton";
 
 
@@ -28,6 +29,14 @@ function GoogleIcon(props: React.SVGProps<SVGSVGElement>) {
 export default function SignupPage() {
   const { user, loading } = useAuth();
   const router = useRouter();
+  const { toast } = useToast();
+
+  const [fullname, setFullname] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
+  const [terms, setTerms] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     if (!loading && user) {
@@ -36,7 +45,39 @@ export default function SignupPage() {
   }, [user, loading, router]);
   
   const handleGoogleSignIn = async () => {
+    setIsLoading(true);
     await signInWithGoogle();
+    setIsLoading(false);
+  };
+  
+  const handleSubmit = async () => {
+    if (!fullname || !email || !password || !confirmPassword) {
+      toast({ variant: 'destructive', title: 'Campos incompletos', description: 'Por favor, rellena todos los campos.' });
+      return;
+    }
+    if (password !== confirmPassword) {
+      toast({ variant: 'destructive', title: 'Las contraseñas no coinciden', description: 'Por favor, verifica tu contraseña.' });
+      return;
+    }
+    if (password.length < 6) {
+      toast({ variant: 'destructive', title: 'Contraseña débil', description: 'La contraseña debe tener al menos 6 caracteres.' });
+      return;
+    }
+    if (!terms) {
+      toast({ variant: 'destructive', title: 'Términos y condiciones', description: 'Debes aceptar los términos y condiciones para continuar.' });
+      return;
+    }
+
+    setIsLoading(true);
+    try {
+      await signUpWithEmailAndPassword(email, password, fullname);
+      // On success, the auth function handles redirection
+    } catch (error) {
+      // On failure, the auth function shows a toast
+      console.error("Sign up failed:", error);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   if (loading || user) {
@@ -87,22 +128,22 @@ export default function SignupPage() {
           <CardContent className="space-y-4">
             <div className="space-y-2">
               <Label htmlFor="fullname">Nombre Completo</Label>
-              <Input id="fullname" placeholder="Tu nombre y apellidos" required />
+              <Input id="fullname" placeholder="Tu nombre y apellidos" required value={fullname} onChange={(e) => setFullname(e.target.value)} disabled={isLoading} />
             </div>
             <div className="space-y-2">
               <Label htmlFor="email">Email</Label>
-              <Input id="email" type="email" placeholder="tu@email.com" required />
+              <Input id="email" type="email" placeholder="tu@email.com" required value={email} onChange={(e) => setEmail(e.target.value)} disabled={isLoading} />
             </div>
             <div className="space-y-2">
               <Label htmlFor="password">Contraseña</Label>
-              <Input id="password" type="password" required />
+              <Input id="password" type="password" required value={password} onChange={(e) => setPassword(e.target.value)} disabled={isLoading} />
             </div>
              <div className="space-y-2">
               <Label htmlFor="confirm-password">Confirmar Contraseña</Label>
-              <Input id="confirm-password" type="password" required />
+              <Input id="confirm-password" type="password" required value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} disabled={isLoading} />
             </div>
             <div className="flex items-center space-x-2">
-                <Checkbox id="terms" />
+                <Checkbox id="terms" checked={terms} onCheckedChange={(checked) => setTerms(Boolean(checked))} disabled={isLoading} />
                 <Label htmlFor="terms" className="text-sm text-muted-foreground">
                     Acepto los{" "}
                     <Link href="#" className="underline text-primary">términos y condiciones</Link>.
@@ -110,9 +151,18 @@ export default function SignupPage() {
             </div>
           </CardContent>
           <CardFooter className="flex flex-col gap-4">
-            <Button className="w-full font-bold" size="lg">
-                <UserPlus className="mr-2 h-4 w-4" />
-                Crear mi Cuenta
+            <Button className="w-full font-bold" size="lg" onClick={handleSubmit} disabled={isLoading}>
+              {isLoading ? (
+                  <>
+                    <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                    Creando cuenta...
+                  </>
+                ) : (
+                  <>
+                    <UserPlus className="mr-2 h-4 w-4" />
+                    Crear mi Cuenta
+                  </>
+                )}
             </Button>
             <div className="relative w-full">
               <div className="absolute inset-0 flex items-center">
@@ -124,7 +174,7 @@ export default function SignupPage() {
                 </span>
               </div>
             </div>
-            <Button variant="outline" className="w-full" onClick={handleGoogleSignIn}>
+            <Button variant="outline" className="w-full" onClick={handleGoogleSignIn} disabled={isLoading}>
               <GoogleIcon className="mr-2 h-4 w-4" />
               Crear cuenta con Google
             </Button>
