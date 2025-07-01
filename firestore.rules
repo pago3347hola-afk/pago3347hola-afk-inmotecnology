@@ -1,0 +1,21 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    
+    // Colección de Usuarios
+    match /users/{userId} {
+      // Un usuario solo puede leer su propia información.
+      allow read: if request.auth != null && request.auth.uid == userId;
+      
+      // Un usuario solo puede crear su propio perfil.
+      allow create: if request.auth != null && request.auth.uid == userId;
+      
+      // Un usuario puede actualizar su propio perfil (nombre, etc.),
+      // PERO NO PUEDE cambiar su propio saldo.
+      allow update: if request.auth != null && request.auth.uid == userId && request.resource.data.balance == resource.data.balance;
+      
+      // Nadie puede borrar perfiles de usuario.
+      allow delete: if false;
+    }
+  }
+}
