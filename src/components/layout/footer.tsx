@@ -27,10 +27,10 @@ export function Footer() {
               <Link href="#" aria-label="Telegram">
                 <Send className="h-6 w-6 text-muted-foreground hover:text-primary" />
               </Link>
-              <Link href="#" aria-label="Facebook">
+              <Link href="https://www.facebook.com/profile.php?id=61578149960393" aria-label="Facebook" target="_blank" rel="noopener noreferrer">
                 <Facebook className="h-6 w-6 text-muted-foreground hover:text-primary" />
               </Link>
-              <Link href="#" aria-label="Instagram">
+              <Link href="https://www.instagram.com/inmo.tecnologic/" aria-label="Instagram" target="_blank" rel="noopener noreferrer">
                 <Instagram className="h-6 w-6 text-muted-foreground hover:text-primary" />
               </Link>
             </div>
