@@ -1,7 +1,11 @@
 'use client';
 
 import Link from "next/link";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
+import { useAuth } from "@/context/AuthContext";
+import { db } from "@/lib/firebase";
+import { doc, updateDoc } from "firebase/firestore";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -10,21 +14,68 @@ import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { ArrowLeft, Info, Banknote, Mail, Loader2 } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { requestWithdrawal } from "@/ai/flows/request-withdrawal-flow";
+import { Skeleton } from "@/components/ui/skeleton";
 
 export default function WithdrawPage() {
-  const [balance, setBalance] = useState(15230.50);
+  const { user, userData, loading } = useAuth();
+  const router = useRouter();
+  
   const [amount, setAmount] = useState('');
   const [beneficiaryName, setBeneficiaryName] = useState('');
   const [clabe, setClabe] = useState('');
   const [cardNumber, setCardNumber] = useState('');
-  const [userEmail, setUserEmail] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const { toast } = useToast();
+
+  useEffect(() => {
+    if (!loading && !user) {
+      router.push('/login');
+    }
+  }, [user, loading, router]);
+
+
+  if (loading || !userData) {
+    return (
+      <div className="flex justify-center items-center min-h-[calc(100vh-8rem)] bg-secondary/20">
+        <div className="container mx-auto px-4 md:px-6 py-12">
+          <div className="max-w-xl mx-auto">
+            <Card>
+              <CardHeader>
+                <Skeleton className="h-8 w-48" />
+                <Skeleton className="h-5 w-64 mt-2" />
+              </CardHeader>
+              <CardContent className="space-y-6">
+                <Skeleton className="h-16 w-full" />
+                <div className="space-y-2">
+                  <Skeleton className="h-4 w-40" />
+                  <Skeleton className="h-10 w-full" />
+                </div>
+                <div className="space-y-4 border p-4 rounded-md">
+                  <Skeleton className="h-6 w-32 mb-4" />
+                  <div className="space-y-2">
+                      <Skeleton className="h-4 w-40" />
+                      <Skeleton className="h-10 w-full" />
+                  </div>
+                  <div className="space-y-2">
+                      <Skeleton className="h-4 w-48" />
+                      <Skeleton className="h-10 w-full" />
+                  </div>
+                </div>
+              </CardContent>
+              <CardFooter>
+                <Skeleton className="h-12 w-full" />
+              </CardFooter>
+            </Card>
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   const formattedBalance = new Intl.NumberFormat('es-MX', {
     style: 'currency',
     currency: 'MXN',
-  }).format(balance);
+  }).format(userData.balance);
 
   const handleSubmit = async () => {
     const withdrawalAmount = parseFloat(amount);
@@ -33,12 +84,12 @@ export default function WithdrawPage() {
         toast({ variant: "destructive", title: "Monto inválido", description: "Por favor, introduce una cantidad válida para retirar." });
         return;
     }
-    if (withdrawalAmount > balance) {
+    if (withdrawalAmount > userData.balance) {
         toast({ variant: "destructive", title: "Saldo insuficiente", description: "No puedes retirar más de tu saldo actual." });
         return;
     }
-    if (!beneficiaryName || (!clabe && !cardNumber) || !userEmail) {
-        toast({ variant: "destructive", title: "Campos incompletos", description: "Por favor, completa todos los campos requeridos." });
+    if (!beneficiaryName || (!clabe && !cardNumber)) {
+        toast({ variant: "destructive", title: "Campos incompletos", description: "Por favor, completa el nombre del beneficiario y CLABE o número de tarjeta." });
         return;
     }
     if (clabe && clabe.length !== 18) {
@@ -54,18 +105,20 @@ export default function WithdrawPage() {
             beneficiaryName,
             clabe,
             cardNumber,
-            userEmail,
+            userEmail: userData.email,
         });
 
         if (result.success) {
-            setBalance((prev) => prev - withdrawalAmount);
+            const userDocRef = doc(db, 'users', user!.uid);
+            const newBalance = userData.balance - withdrawalAmount;
+            await updateDoc(userDocRef, { balance: newBalance });
+
             toast({ title: "¡Solicitud Enviada!", description: result.message });
             // Reset form
             setAmount('');
             setBeneficiaryName('');
             setClabe('');
             setCardNumber('');
-            setUserEmail('');
         } else {
             toast({ variant: "destructive", title: "Error en la Solicitud", description: result.message });
         }
@@ -97,7 +150,7 @@ export default function WithdrawPage() {
                 <Info className="h-4 w-4" />
                 <AlertTitle>Información Importante</AlertTitle>
                 <AlertDescription>
-                  El saldo actual es de <span className="font-bold text-foreground">{formattedBalance}</span>. Los retiros pueden tardar de 2 a 3 días hábiles en procesarse.
+                  Tu saldo actual es de <span className="font-bold text-foreground">{formattedBalance}</span>. Los retiros pueden tardar de 2 a 3 días hábiles en procesarse.
                 </AlertDescription>
               </Alert>
               <div className="space-y-2">
@@ -118,10 +171,7 @@ export default function WithdrawPage() {
                     <Label htmlFor="card-number">Número de Tarjeta (16 dígitos)</Label>
                     <Input id="card-number" placeholder="Opcional si proporcionas CLABE" value={cardNumber} onChange={(e) => setCardNumber(e.target.value)} maxLength={16} />
                  </div>
-                 <div className="space-y-2">
-                    <Label htmlFor="user-email">Correo Electrónico del Cliente</Label>
-                    <Input id="user-email" type="email" placeholder="Para notificar al cliente" value={userEmail} onChange={(e) => setUserEmail(e.target.value)} />
-                 </div>
+                 <p className="text-sm text-muted-foreground">Se enviará una notificación al correo: <span className="font-medium text-foreground">{userData.email}</span></p>
               </div>
             </CardContent>
             <CardFooter>

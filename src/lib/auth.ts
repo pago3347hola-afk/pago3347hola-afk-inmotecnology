@@ -1,6 +1,6 @@
 'use client';
 
-import { GoogleAuthProvider, signInWithPopup, User } from "firebase/auth";
+import { GoogleAuthProvider, signInWithPopup, User, signOut } from "firebase/auth";
 import { doc, setDoc, getDoc } from "firebase/firestore";
 import { auth, db } from "./firebase";
 import { toast } from "@/hooks/use-toast";
@@ -96,6 +96,20 @@ Solución:
       title: title,
       description: description,
       duration: 30000,
+    });
+  }
+}
+
+export async function signOutUser() {
+  try {
+    await signOut(auth);
+    window.location.href = '/';
+  } catch (error) {
+    console.error("Error al cerrar sesión:", error);
+    toast({
+      variant: "destructive",
+      title: "Error",
+      description: "No se pudo cerrar la sesión. Por favor, inténtalo de nuevo.",
     });
   }
 }

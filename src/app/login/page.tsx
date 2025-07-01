@@ -1,6 +1,9 @@
 'use client';
 
 import Link from "next/link";
+import { useEffect } from "react";
+import { useRouter } from "next/navigation";
+import { useAuth } from "@/context/AuthContext";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -8,6 +11,7 @@ import { Label } from "@/components/ui/label";
 import { LogIn } from "lucide-react";
 import { Logo } from "@/components/logo";
 import { signInWithGoogle } from "@/lib/auth";
+import { Skeleton } from "@/components/ui/skeleton";
 
 function GoogleIcon(props: React.SVGProps<SVGSVGElement>) {
   return (
@@ -20,9 +24,48 @@ function GoogleIcon(props: React.SVGProps<SVGSVGElement>) {
 }
 
 export default function LoginPage() {
+  const { user, loading } = useAuth();
+  const router = useRouter();
+
+  useEffect(() => {
+    if (!loading && user) {
+      router.push('/account');
+    }
+  }, [user, loading, router]);
+
   const handleGoogleSignIn = async () => {
     await signInWithGoogle();
   };
+  
+  if (loading || user) {
+    return (
+      <div className="flex items-center justify-center min-h-[calc(100vh-8rem)] bg-secondary/20">
+        <div className="container mx-auto px-4 md:px-6">
+          <Card className="max-w-md mx-auto">
+            <CardHeader className="text-center space-y-4">
+              <Skeleton className="h-8 w-48 mx-auto" />
+              <Skeleton className="h-6 w-64 mx-auto" />
+              <Skeleton className="h-5 w-48 mx-auto" />
+            </CardHeader>
+            <CardContent className="space-y-4">
+              <div className="space-y-2">
+                <Skeleton className="h-4 w-16" />
+                <Skeleton className="h-10 w-full" />
+              </div>
+              <div className="space-y-2">
+                 <Skeleton className="h-4 w-24" />
+                <Skeleton className="h-10 w-full" />
+              </div>
+            </CardContent>
+            <CardFooter className="flex flex-col gap-4">
+              <Skeleton className="h-11 w-full" />
+              <Skeleton className="h-11 w-full" />
+            </CardFooter>
+          </Card>
+        </div>
+      </div>
+    )
+  }
 
   return (
     <div className="flex items-center justify-center min-h-[calc(100vh-8rem)] bg-secondary/20">

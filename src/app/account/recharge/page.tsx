@@ -1,7 +1,9 @@
 'use client';
 
 import Link from "next/link";
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { useRouter } from "next/navigation";
+import { useAuth } from "@/context/AuthContext";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -11,12 +13,22 @@ import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { ArrowLeft, Banknote, Mail, Loader2 } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { sendPaymentProof } from "@/ai/flows/send-payment-proof-flow";
+import { Skeleton } from "@/components/ui/skeleton";
 
 export default function RechargePage() {
+  const { user, userData, loading } = useAuth();
+  const router = useRouter();
+
   const [file, setFile] = useState<File | null>(null);
-  const [email, setEmail] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const { toast } = useToast();
+
+  useEffect(() => {
+    if (!loading && !user) {
+      router.push('/login');
+    }
+  }, [user, loading, router]);
+
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files[0]) {
@@ -45,11 +57,11 @@ export default function RechargePage() {
   }
 
   const handleSubmitProof = async () => {
-    if (!email || !file) {
+    if (!file || !userData) {
       toast({
         variant: "destructive",
         title: "Campos Incompletos",
-        description: "Por favor, introduce tu email y selecciona tu comprobante de pago.",
+        description: "Por favor, inicia sesión y selecciona tu comprobante de pago.",
       });
       return;
     }
@@ -60,7 +72,7 @@ export default function RechargePage() {
       const photoDataUri = await fileToDataUri(file);
       
       const result = await sendPaymentProof({
-        userEmail: email,
+        userEmail: userData.email,
         photoDataUri: photoDataUri,
       });
 
@@ -70,7 +82,6 @@ export default function RechargePage() {
           description: result.message,
         });
 
-        setEmail('');
         setFile(null);
         const fileInput = document.getElementById('payment-proof') as HTMLInputElement;
         if (fileInput) {
@@ -95,7 +106,42 @@ export default function RechargePage() {
         setIsLoading(false);
     }
   };
-
+  
+  if (loading || !userData) {
+    return (
+       <div className="flex justify-center items-center min-h-[calc(100vh-8rem)] bg-secondary/20">
+        <div className="container mx-auto px-4 md:px-6 py-12">
+          <div className="max-w-xl mx-auto">
+             <Card>
+              <CardHeader>
+                <Skeleton className="h-8 w-48 mb-2" />
+                <Skeleton className="h-5 w-64" />
+              </CardHeader>
+              <CardContent className="space-y-6">
+                <div className="space-y-2">
+                  <Skeleton className="h-4 w-24" />
+                  <Skeleton className="h-10 w-full" />
+                </div>
+                <div className="space-y-2">
+                  <Skeleton className="h-4 w-32" />
+                  <Skeleton className="h-10 w-full" />
+                </div>
+                <Skeleton className="h-24 w-full" />
+                <div className="space-y-4 border-t pt-6">
+                  <Skeleton className="h-6 w-1/2" />
+                  <div className="space-y-2">
+                      <Skeleton className="h-4 w-40" />
+                      <Skeleton className="h-10 w-full" />
+                  </div>
+                  <Skeleton className="h-10 w-full mt-4" />
+                </div>
+              </CardContent>
+            </Card>
+          </div>
+        </div>
+      </div>
+    )
+  }
 
   return (
     <div className="flex justify-center items-center min-h-[calc(100vh-8rem)] bg-secondary/20">
@@ -147,13 +193,10 @@ export default function RechargePage() {
                 <div className="space-y-1">
                     <h3 className="font-semibold text-lg">Enviar Comprobante de Pago</h3>
                     <p className="text-sm text-muted-foreground">
-                    Para acreditar tu saldo, sube una imagen de tu comprobante de pago.
+                      Para acreditar tu saldo, sube una imagen de tu comprobante. Usaremos tu correo ({userData.email}) para confirmar la recepción.
                     </p>
                 </div>
-                <div className="space-y-2">
-                    <Label htmlFor="user-email">Tu correo electrónico</Label>
-                    <Input id="user-email" type="email" placeholder="tu@email.com" value={email} onChange={(e) => setEmail(e.target.value)} />
-                </div>
+                
                 <div className="space-y-2">
                     <Label htmlFor="payment-proof">Subir imagen del comprobante</Label>
                     <Input id="payment-proof" type="file" accept="image/*" onChange={handleFileChange} className="file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-primary/10 file:text-primary hover:file:bg-primary/20" />
