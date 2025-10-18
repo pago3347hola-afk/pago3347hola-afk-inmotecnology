@@ -1,6 +1,7 @@
 {
   "name": "nextn",
   "version": "0.1.0",
+  "engines": { "node": "20.x" }
   "private": true,
   "scripts": {
     "dev": "next dev -p 9002",
@@ -42,11 +43,11 @@
     "firebase": "^11.9.1",
     "genkit": "1.6.0",
     "lucide-react": "^0.475.0",
-    "next": "14.2.4",
+    "next": "15.0.0",
     "patch-package": "^8.0.0",
-    "react": "^18.2.0",
+    "react": "^18.3.1",
     "react-day-picker": "^8.10.1",
-    "react-dom": "^18.2.0",
+    "react-dom": "^18.3.1",
     "recharts": "^2.15.1",
     "resend": "^3.5.0",
     "tailwind-merge": "^3.0.1",
